@@ -1,7 +1,7 @@
 # 🛒 Mecha Cat Store
 
 Bienvenido a **Mecha Cat Store**, tu tienda online para productos TCG como **Pokémon**, **One Piece** y **Riftbound**.  
-Proyecto desarrollado con ❤️ para gestión de productos, usuarios y administración futura.
+Proyecto desarrollado para gestión de productos, usuarios y administración futura.
 
 ---
 
@@ -60,22 +60,8 @@ Abre en tu navegador:
 
 ---
 
-## 📸 Preview del proyecto
-
-*(Agrega una imagen aquí cuando quieras mostrar la tienda funcionando)*
-
-```markdown
-![Vista previa de Mecha Cat Store](ruta/a/tu/imagen.png)
-```
-
----
-
 ## 📜 Licencia
 
 Proyecto de práctica y mejora continua.  
 Todos los derechos reservados © 2025 Mecha Cat Store.
-
----
-
-# 🐾 ¡Gracias por visitar Mecha Cat Store!
 
