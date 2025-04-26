@@ -1,0 +1,16 @@
+[
+  { "id": "scarlet-violet", "name": "Scarlet & Violet", "franchiseId": "pokemon" },
+  { "id": "sword-shield", "name": "Sword & Shield", "franchiseId": "pokemon" },
+  { "id": "sun-moon", "name": "Sun & Moon", "franchiseId": "pokemon" },
+  { "id": "xy", "name": "XY", "franchiseId": "pokemon" },
+  { "id": "black-white", "name": "Black & White", "franchiseId": "pokemon" },
+
+  { "id": "op-01", "name": "Romance Dawn", "franchiseId": "one-piece" },
+  { "id": "op-02", "name": "Paramount War", "franchiseId": "one-piece" },
+  { "id": "op-03", "name": "Pillars of Strength", "franchiseId": "one-piece" },
+  { "id": "op-04", "name": "Kingdoms of Intrigue", "franchiseId": "one-piece" },
+  { "id": "op-05", "name": "Awakening of the New Era", "franchiseId": "one-piece" },
+
+  { "id": "rift-alpha", "name": "Riftbound: Alpha Set", "franchiseId": "riftbound" },
+  { "id": "rift-dawn", "name": "Riftbound: Dawn War", "franchiseId": "riftbound" }
+]
