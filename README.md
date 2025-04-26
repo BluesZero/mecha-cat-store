@@ -1,70 +1,81 @@
-# Getting Started with Create React App
+# 🛒 Mecha Cat Store
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Bienvenido a **Mecha Cat Store**, tu tienda online para productos TCG como **Pokémon**, **One Piece** y **Riftbound**.  
+Proyecto desarrollado con ❤️ para gestión de productos, usuarios y administración futura.
 
-## Available Scripts
+---
 
-In the project directory, you can run:
+## 🚀 Tecnologías usadas
 
-### `npm start`
+![React](https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=61DAFB)
+![JavaScript](https://img.shields.io/badge/JavaScript-F7DF1E?style=for-the-badge&logo=javascript&logoColor=black)
+![CSS3](https://img.shields.io/badge/CSS-264de4?style=for-the-badge&logo=css3&logoColor=white)
+![LocalStorage](https://img.shields.io/badge/LocalStorage-Simulado-blueviolet?style=for-the-badge)
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+---
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+## 📂 ¿Cómo instalar el proyecto?
 
-### `npm test`
+```bash
+git clone https://github.com/tu-usuario/mecha-cat-store.git
+cd mecha-cat-store
+npm install
+npm start
+```
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+Abre en tu navegador:  
+👉 http://localhost:3000
 
-### `npm run build`
+---
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+## 👤 Cuentas de prueba
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+| Usuario                  | Contraseña | Rol              |
+|---------------------------|------------|------------------|
+| admin@mechacat.com         | 123456     | Administrador    |
+| diana@example.com          | abc123     | Usuario normal   |
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+✅ **Solo los administradores** pueden registrar nuevos productos en la tienda.
 
-### `npm run eject`
+---
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+## ✨ Funcionalidades
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+- ✅ Registro e inicio de sesión de usuarios
+- ✅ Login persistente con LocalStorage
+- ✅ Detección de usuarios administradores (`isAdmin`)
+- ✅ Agregar nuevos productos dinámicamente (solo admin)
+- ✅ Carrito de compras funcional
+- ✅ Favoritos de productos
+- ✅ Búsqueda de productos en vivo
+- ✅ Vista protegida para administración
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+---
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+## 🎨 Diseño moderno
 
-## Learn More
+- Animaciones suaves (`fadeIn`)
+- Estilos personalizados sin librerías pesadas
+- Responsive (adaptable a móviles y escritorio)
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+---
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+## 📸 Preview del proyecto
 
-### Code Splitting
+*(Agrega una imagen aquí cuando quieras mostrar la tienda funcionando)*
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+```markdown
+![Vista previa de Mecha Cat Store](ruta/a/tu/imagen.png)
+```
 
-### Analyzing the Bundle Size
+---
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+## 📜 Licencia
 
-### Making a Progressive Web App
+Proyecto de práctica y mejora continua.  
+Todos los derechos reservados © 2025 Mecha Cat Store.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+---
 
-### Advanced Configuration
+# 🐾 ¡Gracias por visitar Mecha Cat Store!
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
