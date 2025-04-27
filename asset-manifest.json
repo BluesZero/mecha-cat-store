@@ -1,0 +1,15 @@
+{
+  "files": {
+    "main.css": "/mecha-cat-store/static/css/main.a6250e93.css",
+    "main.js": "/mecha-cat-store/static/js/main.3074865c.js",
+    "static/js/453.75139e15.chunk.js": "/mecha-cat-store/static/js/453.75139e15.chunk.js",
+    "index.html": "/mecha-cat-store/index.html",
+    "main.a6250e93.css.map": "/mecha-cat-store/static/css/main.a6250e93.css.map",
+    "main.3074865c.js.map": "/mecha-cat-store/static/js/main.3074865c.js.map",
+    "453.75139e15.chunk.js.map": "/mecha-cat-store/static/js/453.75139e15.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.a6250e93.css",
+    "static/js/main.3074865c.js"
+  ]
+}
