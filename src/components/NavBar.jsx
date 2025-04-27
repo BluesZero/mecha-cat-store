@@ -3,6 +3,7 @@ import "../styles/styles.css";
 
 export default function NavBar({ onHomeClick }) {
   return (
+    /*
     <nav className="main-nav">
       <a href="#" onClick={onHomeClick}>Inicio</a>
       <a href="#">Journey Together</a>
@@ -11,7 +12,7 @@ export default function NavBar({ onHomeClick }) {
       <a href="#">Otros TCG</a>
       <a href="#">Preventas</a>
       <a href="#">Ofertas</a>
-      <a href="#">Mis pedidos</a>
-    </nav>
+      <a href="#">Mis pedidos</a>  
+    </nav>*/
   );
 }
