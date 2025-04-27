@@ -1,0 +1,12 @@
+# Configuración de Dependabot para Mecha Cat Store
+
+version: 2
+updates:
+  - package-ecosystem: "npm"
+    directory: "/" # raíz del proyecto
+    schedule:
+      interval: "weekly" # Buscar actualizaciones cada semana
+    open-pull-requests-limit: 5
+    ignore:
+      - dependency-name: "react-scripts"
+        versions: [">=5.0.0"]
