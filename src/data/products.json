@@ -7,9 +7,9 @@
     "expansionId": "sv10",
     "productTypeId": "etb",
     "price": 1450,
-    "image": "img/DRETB.webp",
+    "image": "/img/DRETB.webp",
     "images": [
-      "img/DRETB.webp",
+      "/img/DRETB.webp",
       "img/DRETB2.webp",
       "img/DRETB3.webp",
       "img/DRETB4.webp",
