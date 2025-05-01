@@ -1,28 +1,30 @@
-name: Build Check for Mecha Cat Store
+name: Build Check for Mecha Cat Store # Nombre que aparecerá en GitHub Actions
 
+# Cuándo se ejecutará este flujo de trabajo
 on:
-  push:
+  push:  # Se ejecuta cuando haces push (subes código)
     branches:
-      - main
-  pull_request:
+      - main  # Solo si haces push a la rama "main"
+  pull_request:  
     branches:
-      - main
+      - main  # También se ejecuta si alguien hace un pull request hacia "main"
 
+# Define los trabajos a realizar
 jobs:
-  build:
-    runs-on: ubuntu-latest
+  build:  # Nombre del trabajo principal (puede ser cualquier nombre)
+    runs-on: ubuntu-latest  # El servidor de GitHub usará Ubuntu (Linux) para correr los pasos
 
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v3
+    steps:  # Aquí van las instrucciones paso por paso
+      - name: Checkout code # Nombre del paso (descriptivo)
+        uses: actions/checkout@v3 # Acción oficial de GitHub para clonar tu repositorio en el servidor
 
-      - name: Setup Node.js
-        uses: actions/setup-node@v3
+      - name: Setup Node.js # Nombre del paso
+        uses: actions/setup-node@v3 # Acción para instalar Node.js
         with:
-          node-version: '18'
+          node-version: '18'  # Indica qué versión de Node quieres usar (tu proyecto usa Node 18)
 
-      - name: Install dependencies
-        run: npm install
+      - name: Install dependencies  # Paso que instala las dependencias de tu proyecto
+        run: npm install  # Ejecuta el comando npm install en el servidor
 
-      - name: Build project
-        run: npm run build
+      - name: Build project # Paso que construye tu proyecto React
+        run: npm run build  # Ejecuta el build (genera la carpeta /build para producción)

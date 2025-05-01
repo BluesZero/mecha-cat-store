@@ -1,15 +1,20 @@
 // components/ProductDetail.jsx
 import React, { useState } from "react";
+import { useParams } from "react-router-dom";
+import products from "../data/products.json";
 import "../styles/styles.css";
 
-export default function ProductDetail({ product, onAddToCart, onAddToFavorites }) {
+export default function ProductDetail({ onAddToCart, onAddToFavorites }) {
+  const { id } = useParams();
+  const product = products.find((p) => p.id === id);
+
   const images = product?.images || [product?.image];
   const [mainImage, setMainImage] = useState(images[0]);
   const [quantity, setQuantity] = useState(1);
   const [showSlider, setShowSlider] = useState(false);
   const [sliderIndex, setSliderIndex] = useState(0);
 
-  if (!product) return null;
+  if (!product) return <p style={{ color: 'white', padding: '40px' }}>Producto no encontrado</p>;
 
   const handleAdd = () => {
     onAddToCart({ ...product, quantity });
@@ -21,7 +26,6 @@ export default function ProductDetail({ product, onAddToCart, onAddToFavorites }
   };
 
   const closeSlider = () => setShowSlider(false);
-
   const nextSlide = () => setSliderIndex((sliderIndex + 1) % images.length);
   const prevSlide = () => setSliderIndex((sliderIndex - 1 + images.length) % images.length);
 

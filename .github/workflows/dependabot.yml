@@ -1,12 +1,13 @@
 # Configuración de Dependabot para Mecha Cat Store
+# Este archivo le dice a GitHub cómo y cuándo debe buscar actualizaciones de dependencias
 
-version: 2
-updates:
-  - package-ecosystem: "npm"
-    directory: "/" # raíz del proyecto
-    schedule:
+version: 2  # Usamos la versión 2 del esquema de Dependabot (la más nueva y recomendada)
+updates:  # Aquí comienza la lista de actualizaciones que Dependabot debe hacer
+  - package-ecosystem: "npm"  # Tipo de proyecto: npm (Node.js / React)
+    directory: "/" # Directorio donde está tu package.json ("/" significa raíz del repo)
+    schedule: 
       interval: "weekly" # Buscar actualizaciones cada semana
-    open-pull-requests-limit: 5
-    ignore:
-      - dependency-name: "react-scripts"
-        versions: [">=5.0.0"]
+    open-pull-requests-limit: 5  # Máximo 5 Pull Requests abiertos al mismo tiempo
+    ignore: # Lista de dependencias que queremos que NO actualice automáticamente
+      - dependency-name: "react-scripts"  # No queremos que Dependabot actualice react-scripts
+        versions: [">=5.0.0"] # Evitar versiones mayores a 5.0.0 porque pueden romper el proyecto

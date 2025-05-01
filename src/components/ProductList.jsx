@@ -1,8 +1,9 @@
+//ProductsList.jsx
 import React from "react";
 import ProductCard from "./ProductCard";
 import "../styles/styles.css";
 
-export default function ProductList({ products, onAddToCart, onAddToFavorites, onProductClick }) {
+export default function ProductList({ products = [], onAddToCart, onAddToFavorites, onProductClick }) {
   return (
     <div className="container">
       {products.length > 0 ? (
@@ -16,8 +17,11 @@ export default function ProductList({ products, onAddToCart, onAddToFavorites, o
           />
         ))
       ) : (
-        <p style={{ color: "#ccc", textAlign: "center", marginTop: "20px" }}>No se encontraron productos.</p>
+        <p style={{ color: "#ccc", textAlign: "center", marginTop: "20px" }}>
+          No se encontraron productos.
+        </p>
       )}
     </div>
   );
 }
+

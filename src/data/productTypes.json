@@ -14,6 +14,7 @@
   { "id": "premium-trainer-collection", "name": "Premium Trainer Collection", "franchiseId": "pokemon" },
   { "id": "vstar-premium-collection", "name": "VSTAR Premium Collection", "franchiseId": "pokemon" },
   { "id": "tin-pin-collection", "name": "Tin & Pin Collection", "franchiseId": "pokemon" },
+  { "id": "3-pack-blister", "name": "3 Pack Blister", "franchiseId": "pokemon" },
   { "id": "mini-tin", "name": "Mini Tin", "franchiseId": "pokemon" },
   { "id": "promo-card", "name": "Promo Card", "franchiseId": "pokemon" },
   { "id": "single-card", "name": "Single Card", "franchiseId": "pokemon" },

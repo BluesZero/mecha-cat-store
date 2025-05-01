@@ -1,23 +1,42 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import "../styles/styles.css";
 
-export default function ProductCard({ product, onAddToCart, onAddToFavorites, onClick }) {
+export default function ProductCard({ product, onAddToCart }) {
   return (
-    <div className="product-card" onClick={onClick} style={{ cursor: 'pointer' }}>
-      <img src={product.image} alt={product.name} className="product-image" />
-      <div className="product-info">
-        <div className="product-name">{product.name}</div>
-        <div className="product-price">${product.price} MXN</div>
-        <button
-          className="buy-button"
-          onClick={(e) => {
-            e.stopPropagation();
-            onAddToCart(product);
+    <div className="product-card">
+      <div style={{ display: 'flex', flexDirection: 'column', height: '100%' }}>
+        <Link
+          to={`/product/${product.id}`}
+          style={{
+            textDecoration: 'none',
+            color: 'inherit',
+            flexGrow: 1,
+            display: 'flex',
+            flexDirection: 'column',
+            justifyContent: 'space-between',
           }}
         >
-          Agregar al carrito
-        </button>
+          <img src={product.image} alt={product.name} className="product-image" />
+          <div className="product-info">
+            <div className="product-name">{product.name}</div>
+            <div className="product-price">${product.price} MXN</div>
+          </div>
+        </Link>
 
+        {/* Botón siempre abajo */}
+        <div style={{ padding: '0 18px 18px', marginTop: 'auto' }}>
+          <button
+            className="buy-button"
+            onClick={(e) => {
+              e.preventDefault();
+              e.stopPropagation();
+              onAddToCart(product);
+            }}
+          >
+            Agregar al carrito
+          </button>
+        </div>
       </div>
     </div>
   );

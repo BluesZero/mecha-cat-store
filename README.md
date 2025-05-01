@@ -1,6 +1,5 @@
 # 🛒 Mecha Cat Store
 
-![Build Status](https://github.com/BluesZero/mecha-cat-store/actions/workflows/build-check.yml/badge.svg)
 [![Deploy en GitHub Pages](https://img.shields.io/badge/Mecha%20Cat%20Store-Online-brightgreen?style=for-the-badge&logo=github)](https://BluesZero.github.io/mecha-cat-store)
 
 Bienvenido a **Mecha Cat Store**, tu tienda online para productos TCG como **Pokémon**, **One Piece** y **Riftbound**.  

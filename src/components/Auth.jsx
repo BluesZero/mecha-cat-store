@@ -91,10 +91,10 @@ export default function Auth({ onLoginSuccess }) {
             {isLogin ? "Regístrate" : "Inicia sesión"}
           </button>
         </p>
-      </div>
+        </div>
       <style>{`
         @keyframes fadeIn {
-          from { opacity: 0; transform: scale(0.95); }
+                          from { opacity: 0; transform: scale(0.95); }
           to { opacity: 1; transform: scale(1); }
         }
       `}</style>

@@ -1,11 +1,19 @@
-// components/Header.jsx
 import React from "react";
+import { useNavigate } from "react-router-dom";
 
-export default function Header({ cartCount, onCartClick, onHomeClick, onAccountClick, searchQuery, setSearchQuery, filteredProducts, handleProductClick }) {
+export default function Header({
+  cartCount,
+  searchQuery,
+  setSearchQuery,
+  filteredProducts,
+  handleProductClick,
+}) {
+  const navigate = useNavigate();
+
   return (
     <header>
       <div className="header-left">
-        <h1 style={{ cursor: 'pointer' }} onClick={onHomeClick}>Mecha Cat Store</h1>
+        <h1 style={{ cursor: 'pointer' }} onClick={() => navigate("/")}>Mecha Cat Store</h1>
         <div style={{ position: 'relative', display: 'flex', alignItems: 'center' }}>
           <img
             src="img/search.png"
@@ -59,11 +67,24 @@ export default function Header({ cartCount, onCartClick, onHomeClick, onAccountC
           )}
         </div>
       </div>
+
       <nav style={{ position: 'relative', display: 'flex', gap: '12px', alignItems: 'center' }}>
-        <img src="img/icon.png" alt="Cuenta" className="icon" onClick={onAccountClick} style={{ cursor: 'pointer' }} />
+        <img
+          src="img/icon.png"
+          alt="Cuenta"
+          className="icon"
+          onClick={() => navigate("/account")}
+          style={{ cursor: 'pointer' }}
+        />
         <img src="img/wish.png" alt="Wishlist" className="icon" />
         <div style={{ position: 'relative', display: 'inline-block' }}>
-          <img src="img/cart.png" alt="Carrito" className="icon" onClick={onCartClick} style={{ cursor: 'pointer' }} />
+          <img
+            src="img/cart.png"
+            alt="Carrito"
+            className="icon"
+            onClick={() => navigate("/cart")}
+            style={{ cursor: 'pointer' }}
+          />
           {cartCount > 0 && (
             <span style={{
               position: 'absolute',
