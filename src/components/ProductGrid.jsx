@@ -17,18 +17,23 @@ export default function ProductGrid({ onAddToCart }) {
   
 
   return (
-    <div className="container" style={{ paddingTop: '60px' }}>
+    <div style={{ paddingTop: '60px', maxWidth: '1300px', margin: '0 auto' }}>
       <h2 className="section-title">
         Resultados ({filtered.length}) – {franchiseId.toUpperCase()}
       </h2>
-
+  
       {filtered.length === 0 ? (
-        <p style={{ color: '#ccc', textAlign: 'center' }}>No se encontraron productos.</p>
+        <p style={{ color: '#ccc', textAlign: 'center' }}>
+          No se encontraron productos.
+        </p>
       ) : (
-        filtered.map((product) => (
-          <ProductCard key={product.id} product={product} onAddToCart={onAddToCart} />
-        ))
+        <div className="container">
+          {filtered.map((product) => (
+            <ProductCard key={product.id} product={product} onAddToCart={onAddToCart} />
+          ))}
+        </div>
       )}
     </div>
   );
+  
 }

@@ -1,84 +1,25 @@
 // src/components/FranchiseSelector.jsx
-import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import React from 'react';
 import franchises from '../data/franchises.json';
-import expansions from '../data/expansions.json';
-import productTypes from '../data/productTypes.json';
+import FranchiseCard from './FranchiseCard';
 import '../styles/styles.css';
 
 export default function FranchiseSelector() {
-  const [selectedFranchise, setSelectedFranchise] = useState(null);
-
   return (
-    <main style={{ padding: '60px 20px' }}>
+    <div style={{ paddingTop: '60px', maxWidth: '1300px', margin: '0 auto' }}>
       <h2 className="section-title">| Selecciona una franquicia |</h2>
 
-      <div style={{ display: 'flex', gap: '20px', flexWrap: 'wrap', justifyContent: 'center' }}>
+      <div style={{
+        display: 'flex',
+        flexWrap: 'wrap',
+        gap: '20px',
+        justifyContent: 'center',
+        marginTop: '30px'
+      }}>
         {franchises.map(f => (
-          <button
-            key={f.id}
-            onClick={() => setSelectedFranchise(f.id)}
-            style={{
-              background: '#2d2e38',
-              color: 'white',
-              padding: '12px 20px',
-              borderRadius: '12px',
-              border: 'none',
-              cursor: 'pointer'
-            }}
-          >
-            {f.name}
-          </button>
+          <FranchiseCard key={f.id} id={f.id} name={f.name} logo={f.logo} />
         ))}
       </div>
-
-      {selectedFranchise && (
-        <>
-          <h3 className="section-title" style={{ marginTop: '50px' }}>
-            Expansiones de {selectedFranchise.charAt(0).toUpperCase() + selectedFranchise.slice(1)}
-          </h3>
-          <div style={{ display: 'flex', gap: '16px', flexWrap: 'wrap', justifyContent: 'center' }}>
-            {expansions
-              .filter(e => e.franchiseId === selectedFranchise)
-              .map(e => (
-                <Link
-                  key={e.id}
-                  to={`/franchise/${selectedFranchise}/expansions/${e.id}/products`}
-                  style={{
-                    background: '#1e1f26',
-                    color: 'white',
-                    padding: '10px 18px',
-                    borderRadius: '10px',
-                    textDecoration: 'none'
-                  }}
-                >
-                  {e.name}
-                </Link>
-              ))}
-          </div>
-
-          <h3 className="section-title" style={{ marginTop: '40px' }}>
-            Categorías
-          </h3>
-          <div style={{ display: 'flex', gap: '16px', flexWrap: 'wrap', justifyContent: 'center' }}>
-            {productTypes.map(pt => (
-              <Link
-                key={pt.id}
-                to={`/franchise/${selectedFranchise}/product-types/${pt.id}/products`}
-                style={{
-                  background: '#1e1f26',
-                  color: 'white',
-                  padding: '10px 18px',
-                  borderRadius: '10px',
-                  textDecoration: 'none'
-                }}
-              >
-                {pt.name}
-              </Link>
-            ))}
-          </div>
-        </>
-      )}
-    </main>
+    </div>
   );
 }
