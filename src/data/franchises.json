@@ -1,15 +1,18 @@
 [
     {
         "id": "pokemon",
-        "name": "Pokémon"
+        "name": "Pokémon",
+        "logo": "/img/pokemon.svg"
     },
     {
         "id": "one-piece",
-        "name": "One Piece"
+        "name": "One Piece",
+        "logo": "/img/one_piece.webp"
     },
     {
         "id": "riftbound",
-        "name": "Riftbound"
+        "name": "Riftbound",
+        "logo": "/img/riftbound.webp"
     }
 ]
   

@@ -155,6 +155,7 @@ function App() {
             element={<FranchiseSelector />}
           />
 
+          {/* NUEVO SELECTOR DE TIPOS DE PRODUCTO */}
           <Route
             path="/franchise/:franchiseId/product-types"
             element={<ProductTypeSelector />}

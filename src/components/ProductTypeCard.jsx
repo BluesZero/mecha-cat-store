@@ -2,7 +2,7 @@
 import React from "react";
 import { Link, useParams } from "react-router-dom";
 
-export default function ProductTypeCard({ id, name, icon }) {
+export default function ProductTypeCard({ id, name, image }) {
   const { franchiseId } = useParams(); // usado en rutas anidadas
 
   return (
@@ -17,9 +17,9 @@ export default function ProductTypeCard({ id, name, icon }) {
       flexDirection: 'column',
       justifyContent: 'space-between'
     }}>
-      {icon && (
+      {image && (
         <img
-          src={icon}
+          src={image}
           alt={name}
           style={{ height: '100px', objectFit: 'contain', marginBottom: '12px' }}
         />

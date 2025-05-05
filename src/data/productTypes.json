@@ -1,8 +1,8 @@
 [
-  { "id": "elite-trainer-box", "name": "Elite Trainer Box", "franchiseId": "pokemon" },
+  { "id": "elite-trainer-box", "name": "Elite Trainer Box", "franchiseId": "pokemon"},
   { "id": "booster-pack", "name": "Booster Pack", "franchiseId": "pokemon" },
   { "id": "booster-box", "name": "Booster Box", "franchiseId": "pokemon" },
-  { "id": "booster-display", "name": "Booster Display", "franchiseId": "pokemon" },
+  { "id": "booster-display", "name": "Booster Display", "franchiseId": "pokemon", "image": "/img/DRBD.webp"},
   { "id": "theme-deck", "name": "Theme Deck", "franchiseId": "pokemon" },
   { "id": "build-battle-deck", "name": "Build & Battle Deck", "franchiseId": "pokemon" },
   { "id": "challenger-deck", "name": "Challenger Deck", "franchiseId": "pokemon" },
