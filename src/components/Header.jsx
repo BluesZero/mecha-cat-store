@@ -16,7 +16,7 @@ export default function Header({
         <h1 style={{ cursor: 'pointer' }} onClick={() => navigate("/")}>Mecha Cat Store</h1>
         <div style={{ position: 'relative', display: 'flex', alignItems: 'center' }}>
           <img
-            src="img/search.png"
+            src="/img/search.png"
             alt="Buscar"
             style={{ position: 'absolute', left: '8px', width: '20px', opacity: 0.6 }}
           />
@@ -70,16 +70,16 @@ export default function Header({
 
       <nav style={{ position: 'relative', display: 'flex', gap: '12px', alignItems: 'center' }}>
         <img
-          src="img/icon.png"
+          src="/img/icon.png"
           alt="Cuenta"
           className="icon"
           onClick={() => navigate("/account")}
           style={{ cursor: 'pointer' }}
         />
-        <img src="img/wish.png" alt="Wishlist" className="icon" />
+        <img src="/img/wish.png" alt="Wishlist" className="icon" />
         <div style={{ position: 'relative', display: 'inline-block' }}>
           <img
-            src="img/cart.png"
+            src="/img/cart.png"
             alt="Carrito"
             className="icon"
             onClick={() => navigate("/cart")}

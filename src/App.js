@@ -1,7 +1,11 @@
+// Importación de dependencias principales
 import React, { useState, useEffect } from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+
+// Carga de datos iniciales
 import productsData from "./data/products.json";
 
+// Importación de componentes principales de UI y páginas
 import Header from "./components/Header";
 import NavBar from "./components/NavBar";
 import HomePage from "./components/HomePage";
@@ -13,24 +17,31 @@ import AddProduct from "./components/AddProduct";
 import ProductGrid from "./components/ProductGrid";
 import FranchiseSelector from "./components/FranchiseSelector";
 import ProductTypeSelector from "./components/ProductTypeSelector";
+import ExpansionSelector from "./components/ExpansionSelector";
 import "./styles/styles.css";
 
 function App() {
-  const [cart, setCart] = useState([]);
-  const [favorites, setFavorites] = useState([]);
-  const [user, setUser] = useState(null);
-  const [searchQuery, setSearchQuery] = useState("");
-  const [products, setProducts] = useState(productsData);
+  // Estado del carrito, favoritos, usuario, búsqueda y productos
 
+  const [cart, setCart] = useState([]);                   // Lista de productos en el carrito de compras
+  const [favorites, setFavorites] = useState([]);         // Lista de productos marcados como favoritos
+  const [user, setUser] = useState(null);                 // Usuario autenticado (null si no ha iniciado sesión)
+  const [searchQuery, setSearchQuery] = useState("");     // Texto actual del campo de búsqueda
+  const [products, setProducts] = useState(productsData); // Lista de productos cargados desde el JSON
+  
+
+  // Recupera sesión guardada del usuario al montar el componente
   useEffect(() => {
     const savedUser = JSON.parse(localStorage.getItem("mechacat_user"));
     if (savedUser) setUser(savedUser);
   }, []);
 
+  // Filtra productos por nombre según el valor del input de búsqueda
   const filteredProducts = products.filter((p) =>
     p.name.toLowerCase().includes(searchQuery.toLowerCase())
   );
 
+  // Agrega productos al carrito, acumulando cantidades si ya existen
   const handleAddToCart = (product) => {
     setCart((prev) => {
       const existing = prev.find((p) => p.id === product.id);
@@ -46,32 +57,39 @@ function App() {
     });
   };
 
+  // Agrega producto a favoritos si aún no está incluido
   const handleAddToFavorites = (product) => {
     if (!favorites.some((p) => p.id === product.id)) {
       setFavorites((prev) => [...prev, product]);
     }
   };
 
+  // Elimina un producto del carrito según su ID
   const handleRemoveFromCart = (id) => {
     setCart((prev) => prev.filter((p) => p.id !== id));
   };
 
+  // Maneja inicio de sesión exitoso
   const handleLoginSuccess = (loggedUser) => {
     setUser(loggedUser);
   };
 
+  // Cierra sesión y limpia datos del usuario en localStorage
   const handleLogout = () => {
     localStorage.removeItem("mechacat_user");
     setUser(null);
   };
 
+  // Componente principal envuelto en Router para habilitar navegación por rutas
   return (
     <Router>
       <div className="app">
+        {/* Banner superior de anuncio */}
         <div className="top-banner">
           <a href="/">¡Journey Together ya está aquí!</a>
         </div>
 
+        {/* Cabecera con buscador y contador de carrito */}
         <Header
           cartCount={cart.reduce((acc, item) => acc + item.quantity, 0)}
           searchQuery={searchQuery}
@@ -79,9 +97,13 @@ function App() {
           filteredProducts={filteredProducts}
         />
 
+        {/* Barra de navegación principal */}
         <NavBar />
 
+        {/* Rutas de la aplicación */}
         <Routes>
+
+          {/* Página principal con sliders por expansión */}
           <Route
             path="/"
             element={
@@ -96,6 +118,7 @@ function App() {
             }
           />
 
+          {/* Detalle de producto individual */}
           <Route
             path="/product/:id"
             element={
@@ -106,6 +129,7 @@ function App() {
             }
           />
 
+          {/* Página de carrito */}
           <Route
             path="/cart"
             element={
@@ -113,6 +137,7 @@ function App() {
             }
           />
 
+          {/* Página de cuenta o login según estado de sesión */}
           <Route
             path="/account"
             element={
@@ -128,6 +153,7 @@ function App() {
             }
           />
 
+          {/* Página para agregar productos (acceso administrativo) */}
           <Route
             path="/admin/add"
             element={
@@ -139,32 +165,38 @@ function App() {
             }
           />
 
-          {/* NUEVAS RUTAS DE GRID */}
+          {/* Grid de productos filtrado por expansión */}
           <Route
             path="/franchise/:franchiseId/expansions/:expansionId/products"
             element={<ProductGrid onAddToCart={handleAddToCart} />}
           />
+
+          {/* Grid de productos filtrado por tipo */}
           <Route
             path="/franchise/:franchiseId/product-types/:typeId/products"
             element={<ProductGrid onAddToCart={handleAddToCart} />}
           />
 
-          {/* NUEVO SELECTOR DE FRANQUICIAS */}
+          {/* Explorador general de franquicias */}
           <Route
             path="/explore"
             element={<FranchiseSelector />}
           />
 
-          {/* NUEVO SELECTOR DE TIPOS DE PRODUCTO */}
+          {/* Selector de tipos de producto dentro de una franquicia */}
           <Route
             path="/franchise/:franchiseId/product-types"
             element={<ProductTypeSelector />}
           />
+
+          <Route
+            path="/franchise/:franchiseId/expansions"
+            element={<ExpansionSelector />}
+          />
+
         </Routes>
 
-        <footer>
-          <p>&copy; 2025 Meka Cat Store. Todos los derechos reservados.</p>
-        </footer>
+
       </div>
     </Router>
   );

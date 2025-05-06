@@ -61,22 +61,24 @@ export default function ProductSlider({ products, onAddToCart, onAddToFavorites,
   };
 
   return (
-    <div className="slider-wrapper">
-      <div className="product-slider" style={{ overflowX: 'hidden' }}>
-        <Slider {...settings}>
-          {products.map((product) => (
-            <div key={product.id} className="slider-slide">
-              <div className="slider-inner">
-                <ProductCard
-                  product={product}
-                  onAddToCart={onAddToCart}
-                  onAddToFavorites={onAddToFavorites}
-                  onClick={() => onProductClick(product)}
-                />
+    <div className="slider-viewport">
+      <div className="slider-wrapper">
+        <div className="product-slider">
+          <Slider {...settings}>
+            {products.map((product) => (
+              <div key={product.id} className="slider-slide">
+                <div className="slider-inner">
+                  <ProductCard
+                    product={product}
+                    onAddToCart={onAddToCart}
+                    onAddToFavorites={onAddToFavorites}
+                    onClick={() => onProductClick(product)}
+                  />
+                </div>
               </div>
-            </div>
-          ))}
-        </Slider>
+            ))}
+          </Slider>
+        </div>
       </div>
     </div>
   );

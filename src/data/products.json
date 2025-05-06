@@ -5,7 +5,7 @@
     "franchiseId": "pokemon",
     "collectionId": "scarlet-violet",
     "expansionId": "destined-rivals",
-    "productTypeId": "etb",
+    "productTypeId": "elite-trainer-box",
     "type": "expansions",
     "price": 1450,
     "image": "/img/DRETB.webp",
@@ -125,7 +125,7 @@
     "franchiseId": "pokemon",
     "collectionId": "scarlet-violet",
     "expansionId": "journey-together",
-    "productTypeId": "etb",
+    "productTypeId": "elite-trainer-box",
     "type": "expansions",
     "price": 150,
     "image": "/img/JTETB.webp",
@@ -139,7 +139,7 @@
     "tags": ["Preventa", "Booster Pack", "Destined Rivals"]
   },
   {
-    "id": "pk-display-destined-rivals",
+    "id": "pk-display-journey-together",
     "name": "Journey Together: Booster Display",
     "franchiseId": "pokemon",
     "collectionId": "scarlet-violet",

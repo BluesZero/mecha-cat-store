@@ -1,44 +1,58 @@
 [
-  { "id": "sv01", "name": "Scarlet & Violet Base Set", "collectionId": "scarlet-violet" },
-  { "id": "sv02", "name": "Paldea Evolved", "collectionId": "scarlet-violet" },
-  { "id": "sv03", "name": "Obsidian Flames", "collectionId": "scarlet-violet" },
-  { "id": "sv03.5", "name": "Scarlet & Violet 151", "collectionId": "scarlet-violet" },
-  { "id": "sv04", "name": "Paradox Rift", "collectionId": "scarlet-violet" },
-  { "id": "sv04.5", "name": "Paldean Fates", "collectionId": "scarlet-violet" },
-  { "id": "sv05", "name": "Temporal Forces", "collectionId": "scarlet-violet" },
-  { "id": "sv06", "name": "Twilight Masquerade", "collectionId": "scarlet-violet" },
-  { "id": "sv06.5", "name": "Shrouded Fable", "collectionId": "scarlet-violet" },
-  { "id": "sv07", "name": "Stellar Crown", "collectionId": "scarlet-violet" },
-  { "id": "sv08", "name": "Surging Sparks", "collectionId": "scarlet-violet" },
-  { "id": "sv08.5", "name": "Prismatic Evolutions", "collectionId": "scarlet-violet" },
-  { "id": "sv09", "name": "Journey Together", "collectionId": "scarlet-violet" },
-  { "id": "sv10", "name": "Destined Rivals", "collectionId": "scarlet-violet" },
-
-  { "id": "sw01", "name": "Sword & Shield Base Set", "collectionId": "sword-shield" },
-  { "id": "sw02", "name": "Rebel Clash", "collectionId": "sword-shield" },
-  { "id": "sw03", "name": "Darkness Ablaze", "collectionId": "sword-shield" },
-  { "id": "sw04", "name": "Vivid Voltage", "collectionId": "sword-shield" },
-
-  { "id": "sm01", "name": "Sun & Moon Base Set", "collectionId": "sun-moon" },
-  { "id": "sm02", "name": "Guardians Rising", "collectionId": "sun-moon" },
-  { "id": "sm03", "name": "Burning Shadows", "collectionId": "sun-moon" },
-
-  { "id": "xy01", "name": "XY Base Set", "collectionId": "xy" },
-  { "id": "xy02", "name": "Flashfire", "collectionId": "xy" },
-  { "id": "xy03", "name": "Furious Fists", "collectionId": "xy" },
-
-  { "id": "bw01", "name": "Black & White Base Set", "collectionId": "black-white" },
-  { "id": "bw02", "name": "Emerging Powers", "collectionId": "black-white" },
-  { "id": "bw03", "name": "Noble Victories", "collectionId": "black-white" },
-
-  { "id": "op01-01", "name": "Romance Dawn - OP01", "collectionId": "op-01" },
-  { "id": "op02-01", "name": "Paramount War - OP02", "collectionId": "op-02" },
-  { "id": "op03-01", "name": "Pillars of Strength - OP03", "collectionId": "op-03" },
-  { "id": "op04-01", "name": "Kingdoms of Intrigue - OP04", "collectionId": "op-04" },
-  { "id": "op05-01", "name": "Awakening of the New Era - OP05", "collectionId": "op-05" },
-
-  { "id": "rift-alpha-01", "name": "Alpha Core", "collectionId": "rift-alpha" },
-  { "id": "rift-alpha-02", "name": "Alpha Tactics", "collectionId": "rift-alpha" },
-  { "id": "rift-dawn-01", "name": "Dawn Assault", "collectionId": "rift-dawn" },
-  { "id": "rift-dawn-02", "name": "Dawn Defense", "collectionId": "rift-dawn" }
+  {
+    "id": "temporal-forces",
+    "name": "Temporal Forces",
+    "collectionId": "scarlet-violet",
+    "image": "/img/TFLogo.png",
+    "franchise": "pokemon"
+  },
+  {
+    "id": "twilight-masquerade",
+    "name": "Twilight Masquerade",
+    "collectionId": "scarlet-violet",
+    "image": "/img/TPLogo.png",
+    "franchise": "pokemon"
+  },
+  {
+    "id": "shrouded-fable",
+    "name": "Shrouded Fable",
+    "collectionId": "scarlet-violet",
+    "image": "/img/SFLogo.png",
+    "franchise": "pokemon"
+  },
+  {
+    "id": "stellar-crown",
+    "name": "Stellar Crown",
+    "collectionId": "scarlet-violet",
+    "image": "/img/SCLogo.png",
+    "franchise": "pokemon"
+  },
+  {
+    "id": "surging-sparks",
+    "name": "Surging Sparks",
+    "collectionId": "scarlet-violet",
+    "image": "/img/SPLogo.png",
+    "franchise": "pokemon"
+  },
+  {
+    "id": "prismatic-evolutions",
+    "name": "Prismatic Evolutions",
+    "collectionId": "scarlet-violet",
+    "image": "/img/PELOGO.png",
+    "franchise": "pokemon"
+  },
+  {
+    "id": "journey-together",
+    "name": "Journey Together",
+    "collectionId": "scarlet-violet",
+    "image": "/img/JTLogo.png",
+    "franchise": "pokemon"
+  },
+  {
+    "id": "destined-rivals",
+    "name": "Destined Rivals",
+    "collectionId": "scarlet-violet",
+    "image": "/img/DRLogo.png",
+    "franchise": "pokemon"
+  }
 ]
