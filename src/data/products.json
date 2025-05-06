@@ -232,6 +232,24 @@
     "available": true,
     "releaseDate": "2025-05-30",
     "tags": ["Preventa", "Booster Pack", "Destined Rivals"]
+  },
+  {
+    "id": "pk-etb-prismatic-evolutions",
+    "name": "Prismatic Evolutions Elite Trainer Box",
+    "franchiseId": "pokemon",
+    "collectionId": "scarlet-violet",
+    "expansionId": "prismatic-evolutions",
+    "productTypeId": "elite-trainer-box",
+    "type": "expansions",
+    "price": 1450,
+    "image": "/img/PEETB.webp",
+    "images": ["/img/PEETB.webp", "/img/PEETB2.webp"],
+    "description": "La caja de colección incluye cartas especiales como Garchomp ex de Cynthia, Ho-Oh ex de Ethan, Metagross ex de Steven, y Mewtwo ex del Team Rocket. Cada booster contiene múltiples cartas para enriquecer tu colección y estrategia.",
+    "stock": 25,
+    "limitPerCustomer": 1,
+    "preorder": true,
+    "available": true,
+    "releaseDate": "2025-05-30",
+    "tags": ["Preventa", "Elite Trainer Box", "Destined Rivals"]
   }
-
 ]
