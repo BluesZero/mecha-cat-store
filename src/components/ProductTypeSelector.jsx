@@ -23,7 +23,15 @@ export default function ProductTypeSelector() {
   );
 
   return (
-    <div style={{ paddingTop: '60px', maxWidth: '1300px', margin: '0 auto' }}>
+    <div
+      style={{
+        paddingTop: '60px',
+        maxWidth: '1300px',
+        margin: '0 auto',
+        overflowX: 'hidden', // 👈 esto evita el scroll horizontal
+        overflowY: 'hidden' // 👈 esto evita el scroll horizontal
+      }}
+    >
       <h2 className="section-title">| Selecciona un tipo de producto |</h2>
 
       <div
@@ -33,6 +41,7 @@ export default function ProductTypeSelector() {
           gap: '20px',
           justifyContent: 'center',
           marginTop: '30px',
+          padding: '0 30px', // 👈 esto da margen para el scale()
         }}
       >
         {availableTypes.map((type) => (

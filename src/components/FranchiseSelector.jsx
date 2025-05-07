@@ -14,7 +14,8 @@ export default function FranchiseSelector() {
         flexWrap: 'wrap',
         gap: '20px',
         justifyContent: 'center',
-        marginTop: '30px'
+        marginTop: '30px',
+        overflowY: 'hidden' 
       }}>
         {franchises.map(f => (
           <FranchiseCard key={f.id} id={f.id} name={f.name} logo={f.logo} />

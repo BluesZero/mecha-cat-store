@@ -40,41 +40,7 @@ export default function HomePage({
         />
       </section>
 
-      {/* Botones de navegación para explorar otras secciones 
-      <section className="home-section">
-        <h2 className="section-title">| Explorar |</h2>
-        <div style={{
-          display: 'flex',
-          gap: '16px',
-          justifyContent: 'center',
-          flexWrap: 'wrap'
-        }}>
-          <Link
-            to="/franchise/pokemon/expansions/destined-rivals/products"
-            className="explore-button"
-          >
-            Ver productos de Destined Rivals
-          </Link>
 
-          <Link
-            to="/franchise/pokemon/product-types/etb/products"
-            className="explore-button"
-          >
-            Ver Elite Trainer Boxes
-          </Link>
-        </div>
-      </section>*/}
-
-      {/* Slider: Productos nuevos o recientemente añadidos */}
-      <section className="home-section">
-        <h2 className="section-title">| Recién Llegados |</h2>
-        <ProductSlider
-          products={newArrivals}
-          onAddToCart={onAddToCart}
-          onAddToFavorites={onAddToFavorites}
-          onProductClick={onProductClick}
-        />
-      </section>
     </main>
   );
 }
