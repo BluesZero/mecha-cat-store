@@ -337,3 +337,11 @@ textarea {
   border-radius: 8px !important;
   margin: 0;
 }
+
+body {
+  background-image: url('/public/img/tcg-pattern.png'); /* Ajusta la ruta si la guardas con otro nombre o ubicación */
+  background-repeat: repeat;
+  background-size: 300px;
+  background-position: top left;
+  background-attachment: fixed; /* Opcional: para efecto de scroll */
+}
