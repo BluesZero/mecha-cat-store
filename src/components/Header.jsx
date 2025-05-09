@@ -1,3 +1,4 @@
+//Header.jsx
 import React from "react";
 import { useNavigate } from "react-router-dom";
 
@@ -31,6 +32,8 @@ export default function Header({
           {searchQuery.length > 0 && filteredProducts.length > 0 && (
             <ul
               style={{
+                border: '1px solid #444', // 👈 delimita el contenedor
+                backdropFilter: 'blur(4px)', // 👈 mejora visual
                 position: 'absolute',
                 top: '40px',
                 left: 0,
@@ -50,6 +53,7 @@ export default function Header({
                   key={product.id}
                   onClick={() => handleProductClick(product)}
                   style={{
+                    transition: 'background 0.2s',
                     display: 'flex',
                     alignItems: 'center',
                     gap: '10px',
@@ -95,7 +99,8 @@ export default function Header({
               borderRadius: '50%',
               padding: '2px 6px',
               fontSize: '12px',
-              fontWeight: 'bold'
+              fontWeight: 'bold',
+              
             }}>{cartCount}</span>
           )}
         </div>

@@ -2,6 +2,7 @@
 import React, { useState, useEffect } from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
+
 // Carga de datos iniciales
 import productsData from "./data/products.json";
 
@@ -28,7 +29,7 @@ function App() {
   const [user, setUser] = useState(null);                 // Usuario autenticado (null si no ha iniciado sesión)
   const [searchQuery, setSearchQuery] = useState("");     // Texto actual del campo de búsqueda
   const [products, setProducts] = useState(productsData); // Lista de productos cargados desde el JSON
-  
+  const [showAddProduct, setShowAddProduct] = useState(false);
 
   // Recupera sesión guardada del usuario al montar el componente
   useEffect(() => {
@@ -193,6 +194,31 @@ function App() {
             path="/franchise/:franchiseId/expansions"
             element={<ExpansionSelector />}
           />
+
+          <Route
+            path="/account/addproduct"
+            element={
+              user ? (
+                showAddProduct ? (
+                  <AddProduct
+                    onProductAdd={(newProduct) => {
+                      setProducts((prev) => [...prev, newProduct]);
+                      setShowAddProduct(false); // volver a cuenta después
+                    }}
+                  />
+                ) : (
+                  <Account
+                    user={user}
+                    onLogout={handleLogout}
+                    onShowAddProduct={() => setShowAddProduct(true)}
+                  />
+                )
+              ) : (
+                <Auth onLoginSuccess={handleLoginSuccess} />
+              )
+            }
+          />
+
 
         </Routes>
 

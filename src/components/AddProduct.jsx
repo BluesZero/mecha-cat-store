@@ -1,11 +1,13 @@
 // components/AddProduct.jsx
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import franchises from "../data/franchises.json";
 import collections from "../data/collections.json";
 import expansions from "../data/expansions.json";
 import productTypes from "../data/productTypes.json";
 
 export default function AddProduct({ onProductAdd }) {
+  const navigate = useNavigate();
   const [form, setForm] = useState({
     franchiseId: "",
     collectionId: "",
@@ -55,21 +57,7 @@ export default function AddProduct({ onProductAdd }) {
     };
     console.log("Producto agregado:", newProduct);
     onProductAdd?.(newProduct);
-    setForm({
-      franchiseId: "",
-      collectionId: "",
-      expansionId: "",
-      productTypeId: "",
-      name: "",
-      price: "",
-      image: "",
-      description: "",
-      stock: 0,
-      limitPerCustomer: 1,
-      preorder: false,
-      releaseDate: "",
-      available: true
-    });
+    navigate("/account");
   };
 
   const filteredCollections = collections.filter(col => col.franchiseId === form.franchiseId);
@@ -79,8 +67,28 @@ export default function AddProduct({ onProductAdd }) {
   return (
     <div style={{ minHeight: "100vh", display: "flex", justifyContent: "center", alignItems: "center", padding: "20px" }}>
       <div style={{ width: "100%", maxWidth: "600px", background: "#2a2f34", padding: "24px", borderRadius: "12px" }}>
+        <button
+          onClick={() => navigate("/account")}
+          style={{
+            marginBottom: "20px",
+            backgroundColor: "#3b3e47",
+            color: "white",
+            padding: "10px 16px",
+            border: "none",
+            borderRadius: "8px",
+            cursor: "pointer",
+            fontSize: "14px",
+            fontWeight: "bold",
+            transition: "background-color 0.3s"
+          }}
+          onMouseEnter={(e) => e.currentTarget.style.backgroundColor = "#4b4f5c"}
+          onMouseLeave={(e) => e.currentTarget.style.backgroundColor = "#3b3e47"}
+        >
+          ← Volver a cuenta
+        </button>
+
         <h2 style={{ color: "white", marginBottom: "20px", textAlign: "center" }}>Registrar nuevo producto</h2>
-        <form onSubmit={handleSubmit}>
+        <form onSubmit={handleSubmit} style={{ display: "flex", flexDirection: "column", gap: "16px" }}>
           <select name="franchiseId" value={form.franchiseId} onChange={handleChange} style={inputStyle}>
             <option value="">Seleccionar franquicia</option>
             {franchises.map(fr => <option key={fr.id} value={fr.id}>{fr.name}</option>)}
@@ -103,18 +111,27 @@ export default function AddProduct({ onProductAdd }) {
 
           <input name="name" placeholder="Nombre" value={form.name} onChange={handleChange} style={inputStyle} />
           <input name="price" type="number" placeholder="Precio" value={form.price} onChange={handleChange} style={inputStyle} />
-          <input name="image" placeholder="Nombre de imagen (ej: producto.webp)" value={form.image} onChange={(e) => setForm({ ...form, image: `img/${e.target.value}` })} style={inputStyle} />
+          <input name="image" placeholder="Nombre de imagen (ej: producto.webp)" value={form.image} onChange={handleChange} style={inputStyle} />
           <textarea name="description" placeholder="Descripción" value={form.description} onChange={handleChange} rows="3" style={inputStyle} />
-          <input name="stock" type="number" placeholder="Stock" value={form.stock} onChange={handleChange} style={inputStyle} />
-          <input name="limitPerCustomer" type="number" placeholder="Límite por cliente" value={form.limitPerCustomer} onChange={handleChange} style={inputStyle} />
+
+          <div style={{ marginTop: "8px" }}>
+            <label style={{ color: "#bbb", fontSize: "14px", marginBottom: "6px", display: "block" }}>
+              Inventario y límites
+            </label>
+            <input name="stock" type="number" placeholder="Stock disponible" value={form.stock} onChange={handleChange} style={inputStyle} />
+            <input name="limitPerCustomer" type="number" placeholder="Límite por cliente" value={form.limitPerCustomer} onChange={handleChange} style={inputStyle} />
+          </div>
+
           <input name="releaseDate" type="date" placeholder="Fecha de lanzamiento" value={form.releaseDate} onChange={handleChange} style={inputStyle} />
 
-          <label style={{ color: "#ccc", display: "block", marginBottom: "8px" }}>
-            <input type="checkbox" name="preorder" checked={form.preorder} onChange={handleChange} /> Preventa
+          <label style={{ display: "flex", alignItems: "center", gap: "10px", color: "white", marginBottom: "8px", fontWeight: "500", fontSize: "15px" }}>
+            <input type="checkbox" name="preorder" checked={form.preorder} onChange={handleChange} style={{ transform: "scale(1.2)", accentColor: "#ff3881" }} />
+            Preventa
           </label>
 
-          <label style={{ color: "#ccc", display: "block", marginBottom: "16px" }}>
-            <input type="checkbox" name="available" checked={form.available} onChange={handleChange} /> Disponible
+          <label style={{ display: "flex", alignItems: "center", gap: "10px", color: "white", marginBottom: "20px", fontWeight: "500", fontSize: "15px" }}>
+            <input type="checkbox" name="available" checked={form.available} onChange={handleChange} style={{ transform: "scale(1.2)", accentColor: "#ff3881" }} />
+            Disponible
           </label>
 
           <button type="submit" className="buy-button" style={{ width: "100%", padding: "12px" }}>
@@ -128,11 +145,13 @@ export default function AddProduct({ onProductAdd }) {
 
 const inputStyle = {
   width: "100%",
-  padding: "10px",
+  padding: "12px 16px",
   borderRadius: "8px",
   border: "1px solid #444",
-  background: "#1e1f26",
+  backgroundColor: "#1e1f26",
   color: "white",
-  fontSize: "14px",
-  marginBottom: "16px"
+  fontSize: "15px",
+  marginBottom: "0px",
+  outline: "none",
+  transition: "border 0.3s, box-shadow 0.3s"
 };

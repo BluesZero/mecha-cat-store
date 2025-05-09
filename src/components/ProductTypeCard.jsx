@@ -36,8 +36,8 @@ export default function ProductTypeCard({ id, name, image, franchiseId }) {
           src={image}
           alt={name}
           style={{
-            width: '100%',
-            height: '180px',
+            width: '120%',
+            height: '200px',
             objectFit: 'contain',
             marginBottom: '16px',
           }}

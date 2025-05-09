@@ -32,7 +32,28 @@ export default function Auth({ onLoginSuccess }) {
     if (!username || !email || !password) return setError("Completa todos los campos");
     const users = getUsers();
     if (users.find((u) => u.email === email)) return setError("Ese email ya está registrado");
-    const newUser = { id: Date.now(), username, email, password, isAdmin: false };
+    if (users.find((u) => u.username === username)) return setError("Ese nombre de usuario ya está en uso");
+
+    const newUser = {
+      id: Date.now(),
+      username,
+      email,
+      password,
+      isAdmin: false,
+      name: "Sin nombre",
+      lastname: "Sin apellido",
+      favorites: [],
+      orders: [],
+      address: {
+        street: "",
+        city: "",
+        state: "",
+        zip: "",
+        country: ""
+      },
+      phone: "",
+      joinedAt: new Date().toISOString()
+    };
     saveUser(newUser);
     localStorage.setItem("mechacat_user", JSON.stringify(newUser));
     onLoginSuccess(newUser);
@@ -91,10 +112,10 @@ export default function Auth({ onLoginSuccess }) {
             {isLogin ? "Regístrate" : "Inicia sesión"}
           </button>
         </p>
-        </div>
+      </div>
       <style>{`
         @keyframes fadeIn {
-                          from { opacity: 0; transform: scale(0.95); }
+          from { opacity: 0; transform: scale(0.95); }
           to { opacity: 1; transform: scale(1); }
         }
       `}</style>

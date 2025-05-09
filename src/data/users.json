@@ -1,16 +1,42 @@
 [
   {
-    "id": 1,
-    "username": "admin",
+    "id": "user-001",
     "email": "admin@mechacat.com",
+    "username": "admin",
+    "name": "Ash",
+    "lastname": "Ketchum",
     "password": "123456",
-    "isAdmin": true
-  },
+    "isAdmin": true,
+    "favorites": [],
+    "orders": [],
+    "address": {
+      "street": "Av. del Trueno 123",
+      "city": "Pueblo Paleta",
+      "state": "Kanto",
+      "zip": "45600",
+      "country": "Japón"
+    },
+    "phone": "+81 123 456 789",
+    "joinedAt": "2023-11-15T10:30:00Z"
+    },
   {
-    "id": 2,
-    "username": "diana",
+    "id": "user-002",
     "email": "diana@example.com",
+    "username": "admin",
+    "name": "DianaGamer",
+    "lastname": "Rodriguez",
     "password": "abc123",
-    "isAdmin": false
-  }
+    "isAdmin": false,
+    "favorites": [],
+    "orders": [],
+    "address": {
+      "street": "Av. Siempre Viva 321",
+      "city": "Springfield",
+      "state": "Shelbyville",
+      "zip": "45600",
+      "country": "Estados Unidos"
+    },
+    "phone": "+81 123 456 789",
+    "joinedAt": "2023-11-15T10:30:00Z"
+    }
 ]

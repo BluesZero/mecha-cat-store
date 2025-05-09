@@ -110,7 +110,7 @@ header h1 {
   display: flex;
   justify-content: center;
   align-items: center;
-  padding: 2px 0;
+  padding: 1px 0;
   gap: 20px;
   flex-wrap: wrap;
 }
@@ -134,6 +134,16 @@ header h1 {
 .icon {
   width: 40px;
   height: 40px;
+}
+.icon {
+  width: 40px;
+  height: 40px;
+  cursor: pointer;
+  transition: transform 0.2s ease;
+}
+
+.icon:hover {
+  transform: scale(1.1);
 }
 
 /* ===== HERO ===== */
@@ -310,4 +320,20 @@ header h1 {
   height: 100%;            /* 👈 fuerza que la imagen llene el contenedor */
   object-fit: cover;
   display: block;          /* 👈 elimina espacio fantasma debajo de la imagen */
+}
+
+input:focus,
+select:focus,
+textarea:focus {
+  border-color: var(--color-accent);
+  box-shadow: 0 0 4px var(--color-accent);
+}
+
+input,
+select,
+textarea {
+  box-sizing: border-box;
+
+  border-radius: 8px !important;
+  margin: 0;
 }
