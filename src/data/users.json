@@ -8,7 +8,20 @@
     "password": "123456",
     "isAdmin": true,
     "favorites": [],
-    "orders": [],
+    "orders": [
+      {
+        "orderId": "A-1001",
+        "date": "2024-11-05T14:30:00Z",
+        "total": 1250.75,
+        "status": "Enviado"
+      },
+      {
+        "orderId": "A-1002",
+        "date": "2024-12-15T10:00:00Z",
+        "total": 899.00,
+        "status": "Entregado"
+      }
+    ],
     "address": {
       "street": "Av. del Trueno 123",
       "city": "Pueblo Paleta",
@@ -18,7 +31,7 @@
     },
     "phone": "+81 123 456 789",
     "joinedAt": "2023-11-15T10:30:00Z"
-    },
+  },
   {
     "id": "user-002",
     "email": "diana@example.com",

@@ -19,7 +19,7 @@ export default function Header({
           <img
             src="/img/search.png"
             alt="Buscar"
-            style={{ position: 'absolute', left: '8px', width: '20px', opacity: 0.6 }}
+            style={{ position: 'absolute', left: '8px', width: '25px', opacity: 0.6 }}
           />
           <input
             type="text"
@@ -27,7 +27,7 @@ export default function Header({
             placeholder="Buscar productos..."
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
-            style={{ width: '200px', paddingLeft: '28px' }}
+            style={{ width: '300px', paddingLeft: '28px' }}
           />
           {searchQuery.length > 0 && filteredProducts.length > 0 && (
             <ul

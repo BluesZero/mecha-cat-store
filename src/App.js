@@ -2,7 +2,6 @@
 import React, { useState, useEffect } from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
-
 // Carga de datos iniciales
 import productsData from "./data/products.json";
 
@@ -12,7 +11,7 @@ import NavBar from "./components/NavBar";
 import HomePage from "./components/HomePage";
 import ProductDetail from "./components/ProductDetail";
 import CartPage from "./components/CartPage";
-import Account from "./components/Account";
+import Account from "./components/Account/Account";
 import Auth from "./components/Auth";
 import AddProduct from "./components/AddProduct";
 import ProductGrid from "./components/ProductGrid";
@@ -22,8 +21,8 @@ import ExpansionSelector from "./components/ExpansionSelector";
 import "./styles/styles.css";
 
 function App() {
-  // Estado del carrito, favoritos, usuario, búsqueda y productos
-
+  
+  //Usamos el hook useState para el estado del carrito, favoritos, usuario, búsqueda y productos
   const [cart, setCart] = useState([]);                   // Lista de productos en el carrito de compras
   const [favorites, setFavorites] = useState([]);         // Lista de productos marcados como favoritos
   const [user, setUser] = useState(null);                 // Usuario autenticado (null si no ha iniciado sesión)
