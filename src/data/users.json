@@ -13,13 +13,67 @@
         "orderId": "A-1001",
         "date": "2024-11-05T14:30:00Z",
         "total": 1250.75,
-        "status": "Enviado"
+        "status": "Enviado",
+        "products": [
+          {
+            "id": "pk-etb-destined",
+            "name": "Elite Trainer Box - Destined Rivals",
+            "price": 650.75,
+            "quantity": 1,
+            "image": "/img/DRETB.webp"
+          },
+          {
+            "id": "pk-booster-jt",
+            "name": "Booster Box - Journey Together",
+            "price": 600.00,
+            "quantity": 1,
+            "image": "/img/JTBB.webp"
+          }
+        ]
       },
-      {
+            {
         "orderId": "A-1002",
-        "date": "2024-12-15T10:00:00Z",
-        "total": 899.00,
-        "status": "Entregado"
+        "date": "2024-11-05T14:30:00Z",
+        "total": 1250.75,
+        "status": "Pendiente",
+        "products": [
+          {
+            "id": "pk-etb-destined",
+            "name": "Elite Trainer Box - Destined Rivals",
+            "price": 650.75,
+            "quantity": 1,
+            "image": "/img/DRETB.webp"
+          },
+          {
+            "id": "pk-booster-jt",
+            "name": "Booster Box - Journey Together",
+            "price": 600.00,
+            "quantity": 1,
+            "image": "/img/JTBB.webp"
+          }
+        ]
+      },
+            {
+        "orderId": "A-1003",
+        "date": "2024-11-05T14:30:00Z",
+        "total": 1250.75,
+        "status": "Enviado",
+        "products": [
+          {
+            "id": "pk-etb-destined",
+            "name": "Elite Trainer Box - Destined Rivals",
+            "price": 650.75,
+            "quantity": 1,
+            "image": "/img/DRETB.webp"
+          },
+          {
+            "id": "pk-booster-jt",
+            "name": "Booster Box - Journey Together",
+            "price": 600.00,
+            "quantity": 1,
+            "image": "/img/JTBB.webp"
+          }
+        ]
       }
     ],
     "address": {

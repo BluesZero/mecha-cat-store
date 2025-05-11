@@ -17,9 +17,9 @@
       "/img/DRETB5.webp"
     ],
     "description": "La caja de colección incluye cartas especiales como Garchomp ex de Cynthia, Ho-Oh ex de Ethan, Metagross ex de Steven, y Mewtwo ex del Team Rocket. Cada booster contiene múltiples cartas para enriquecer tu colección y estrategia.",
-    "stock": 25,
+    "stock": 0,
     "limitPerCustomer": 1,
-    "preorder": true,
+    "preorder": false,
     "available": true,
     "releaseDate": "2025-05-30",
     "tags": ["Preventa", "Elite Trainer Box", "Destined Rivals"]
