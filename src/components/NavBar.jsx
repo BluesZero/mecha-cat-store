@@ -11,7 +11,6 @@ export default function NavBar() {
       <Link to="/explore">Otros TCG</Link> {/* Puedes actualizar cuando tengas data de Digimon, etc. */}
       <Link to="/franchise/pokemon/product-types/preorder/products">Preventas</Link>  {/* Puedes implementar filtro por "preorder": true */}
       <Link to="/franchise/pokemon/product-types/sale/products">Ofertas</Link>    {/* Puedes usar tags o campo "discount": true */}
-      <Link to="#">Mis pedidos</Link> {/* Ruta privada futura */}
     </nav>
   );
 }

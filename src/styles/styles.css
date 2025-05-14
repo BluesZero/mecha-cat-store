@@ -197,6 +197,7 @@ header h1 {
 .product-image {
   width: 100%;
   height: 240px;
+  background: center/100% url("/public/img/tcg-pattern-nb.png");
   object-fit: contain;
   display: block;
   border-top-left-radius: 16px;
@@ -221,7 +222,7 @@ header h1 {
 .product-price {
   font-size: 16px;
   color: var(--color-accent);
-  margin-bottom: 12px;
+
 }
 
 .buy-button {
@@ -310,7 +311,7 @@ header h1 {
 .hero-slider {
   position: relative;
   width: 100%;
-  height: 600px;           /* 👈 usar height fijo en lugar de max-height */
+  height: 500px;           /* 👈 usar height fijo en lugar de max-height */
   overflow: hidden;
   margin-bottom: 60px;
 }
@@ -338,3 +339,28 @@ textarea {
   margin: 0;
 }
 
+.banna {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  height: 12vh; /* o el alto que necesites */
+  width: 100%;
+}
+
+.image-wrap {
+  position: relative;
+  display: inline-block;
+  
+}
+
+.image-wrap::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 60%; /* porcentaje de degradado */
+  background: linear-gradient(to top, rgba(0, 0, 0, 0.5), transparent);
+
+}

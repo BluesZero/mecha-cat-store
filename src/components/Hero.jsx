@@ -12,7 +12,7 @@ const banners = [
   {
     image: "/img/JT.png",
     alt: "Explora todos los productos Pokémon",
-    link: "/franchise/pokemon/product-types",
+    link: "/franchise/pokemon/expansions/journey-together/products",
   },
   {
     image: "/img/PE.png",
@@ -30,25 +30,44 @@ export default function Hero() {
     autoplaySpeed: 5000,
     arrows: false,
     fade: true,
+    pauseOnHover: false,
   };
 
   return (
-    <section className="hero-slider">
+    <section className="hero-slider" style={{ position: "relative", overflow: "hidden" }}>
       <Slider {...settings}>
         {banners.map((banner, index) => (
-          <a key={index} href={banner.link}>
-            <img
-              src={banner.image}
-              alt={banner.alt}
-              style={{
-                width: "100%",
-                maxHeight: "600px",
-                objectFit: "cover",
-              }}
-            />
-          </a>
+          <div key={index} style={{ position: "relative" }}>
+            <a href={banner.link} style={{ display: "block", position: "relative" }}>
+              <img
+                src={banner.image}
+                alt={banner.alt}
+                style={{
+                  width: "100%",
+                  maxHeight: "600px",
+                  objectFit: "cover",
+                  filter: "brightness(0.9)",
+                }}
+              />
+              <div style={{
+                position: "absolute",
+                bottom: "30px",
+                left: "30px",
+                color: "white",
+                backgroundColor: "rgba(0,0,0,0.5)",
+                padding: "12px 20px",
+                borderRadius: "10px",
+                maxWidth: "60%",
+                fontSize: "18px",
+                boxShadow: "0 4px 12px rgba(0,0,0,0.4)"
+              }}>
+                {banner.alt}
+              </div>
+            </a>
+          </div>
         ))}
       </Slider>
+
     </section>
   );
 }

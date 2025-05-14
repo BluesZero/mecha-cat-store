@@ -5,7 +5,14 @@ import "../styles/styles.css";
 
 export default function ProductCard({ product, onAddToCart }) {
   return (
-    <div className="product-card" style={{ position: "relative" }}>
+    <div className="product-card" style={{ position: "relative" }}              
+      onMouseEnter={(e) => {
+        e.currentTarget.style.background = '#3a3b47';       
+      }}
+      onMouseLeave={(e) => {
+        e.currentTarget.style.background = '#2d2e38';
+      }}>
+
       {/* Etiquetas condicionales */}
       {product.preorder && <span style={tagStyle("#28a745")}>Preventa</span>}
       {product.stock === 0 && <span style={tagStyle("#dc3545")}>Agotado</span>}
@@ -23,6 +30,7 @@ export default function ProductCard({ product, onAddToCart }) {
         }}
       >
         <img src={product.image} alt={product.name} className="product-image" />
+        <div style={{ height: "0px", borderBottom: "1px solid #333", margin: "0px 0" }} />
         <div className="product-info">
           <div className="product-name">{product.name}</div>
           <div className="product-price">${product.price} MXN</div>
