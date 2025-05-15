@@ -1,10 +1,8 @@
 // src/components/HomePage.jsx
 import React from 'react';
-import { Link } from 'react-router-dom';
 import Hero from './Hero';
 import ProductSlider from './ProductSlider';
-import PromoCard from './PromoCard'; // Asegúrate de importarlo
-
+import PromoCard from './PromoCard';
 import Footer from './Footer';
 import '../styles/styles.css';
 
@@ -16,19 +14,57 @@ export default function HomePage({
   onAddToFavorites,
   onProductClick
 }) {
+  // Filtro para ofertas
+  const saleProducts = newArrivals.filter(p => p.discount === true);
+
   return (
-    <main>
-      {/* Sección principal con imagen de fondo o banner visual */}
-      
-      <Hero/>
-      {/* Slider: Productos destacados - Destined Rivals */}
-      <section className="home-section" style={{ display: "flex", gap: "24px", justifyContent: "center", flexWrap: "wrap", marginBottom: "40px",  }}>
-        <PromoCard image="/img/BBPC.png" alt="Explora Journey Together" link="/franchise/pokemon/expansions/journey-together/products" />
-        <PromoCard image="/img/WFPC.png" alt="Explora Prismatic Evolutions" link="/franchise/pokemon/expansions/prismatic-evolutions/products" />
-        <PromoCard image="/img/DRPC.png" alt="Ofertas especiales" link="/franchise/pokemon/product-types/sale/products" />
+    <main className="page-fade">
+      {/* Hero con banners */}
+      <Hero />
+
+      {/* Promocionales destacados */}
+      <section
+        className="home-section"
+        style={{
+          display: "flex",
+          gap: "24px",
+          justifyContent: "center",
+          flexWrap: "wrap",
+          marginBottom: "40px"
+        }}
+      >
+        <PromoCard
+          image="/img/BBPC.png"
+          alt="Explora Journey Together"
+          link="/franchise/pokemon/expansions/journey-together/products"
+        />
+        <PromoCard
+          image="/img/WFPC.png"
+          alt="Explora Prismatic Evolutions"
+          link="/franchise/pokemon/expansions/prismatic-evolutions/products"
+        />
+        <PromoCard
+          image="/img/BBDR2.png"
+          alt="Ofertas especiales"
+          link="/franchise/pokemon/product-types/sale/products"
+        />
       </section>
-      
-      <section className="home-section ">
+
+      {/* Slider: Ofertas */}
+      {saleProducts.length > 0 && (
+        <section className="home-section">
+          <h2 className="section-title">| Ofertas Especiales |</h2>
+          <ProductSlider
+            products={saleProducts}
+            onAddToCart={onAddToCart}
+            onAddToFavorites={onAddToFavorites}
+            onProductClick={onProductClick}
+          />
+        </section>
+      )}
+
+      {/* Slider: Destined Rivals */}
+      <section className="home-section">
         <h2 className="section-title">| Destined Rivals |</h2>
         <ProductSlider
           products={destinedRivals}
@@ -38,7 +74,7 @@ export default function HomePage({
         />
       </section>
 
-      {/* Slider: Productos destacados - Journey Together */}
+      {/* Slider: Journey Together */}
       <section className="home-section">
         <h2 className="section-title">| Journey Together |</h2>
         <ProductSlider
@@ -48,8 +84,8 @@ export default function HomePage({
           onProductClick={onProductClick}
         />
       </section>
-      <Footer/>
 
+      <Footer />
     </main>
   );
 }

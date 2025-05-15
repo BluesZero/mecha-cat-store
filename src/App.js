@@ -57,17 +57,30 @@ function App() {
     });
   };
 
+  //Ofertas
+  const specialOffers = products.filter((p) => p.discount === true);
+
   // Agrega producto a favoritos si aún no está incluido
   const handleAddToFavorites = (product) => {
     if (!favorites.some((p) => p.id === product.id)) {
       setFavorites((prev) => [...prev, product]);
     }
   };
-
+  
   // Elimina un producto del carrito según su ID
   const handleRemoveFromCart = (id) => {
     setCart((prev) => prev.filter((p) => p.id !== id));
   };
+
+  //Controla la pagina del carrito
+  const handleUpdateQuantity = (id, newQuantity) => {
+    setCart((prev) =>
+      prev.map((item) =>
+        item.id === id ? { ...item, quantity: newQuantity } : item
+      )
+    );
+  };
+
 
   // Maneja inicio de sesión exitoso
   const handleLoginSuccess = (loggedUser) => {
@@ -111,6 +124,7 @@ function App() {
                 destinedRivals={products.filter((p) => p.expansionId === "destined-rivals")}
                 journeyTogether={products.filter((p) => p.expansionId === "journey-together")}
                 newArrivals={products.filter((p) => p.type === "newArrivals")}
+                specialOffers={specialOffers}
                 onAddToCart={handleAddToCart}
                 onAddToFavorites={handleAddToFavorites}
                 onProductClick={() => {}}
@@ -133,7 +147,7 @@ function App() {
           <Route
             path="/cart"
             element={
-              <CartPage cart={cart} onRemove={handleRemoveFromCart} />
+              <CartPage cart={cart} onRemove={handleRemoveFromCart} onUpdateQuantity={handleUpdateQuantity}/>
             }
           />
 

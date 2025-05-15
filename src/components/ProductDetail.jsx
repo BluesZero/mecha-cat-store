@@ -14,6 +14,10 @@ export default function ProductDetail({ onAddToCart, onAddToFavorites }) {
   const [showSlider, setShowSlider] = useState(false);
   const [sliderIndex, setSliderIndex] = useState(0);
 
+  const isSoldOut = product.stock === 0;
+  const isPreorder = product.preorder;
+  const isDiscount = product.discount === true && product.originalPrice;
+
   if (!product) return <p style={{ color: 'white', padding: '40px' }}>Producto no encontrado</p>;
 
   const handleAdd = () => {
@@ -28,6 +32,7 @@ export default function ProductDetail({ onAddToCart, onAddToFavorites }) {
   const closeSlider = () => setShowSlider(false);
   const nextSlide = () => setSliderIndex((sliderIndex + 1) % images.length);
   const prevSlide = () => setSliderIndex((sliderIndex - 1 + images.length) % images.length);
+
 
   return (
     <div className="container" style={{ padding: '60px 20px', maxWidth: '1300px' }}>
@@ -84,6 +89,27 @@ export default function ProductDetail({ onAddToCart, onAddToFavorites }) {
           </div>
 
           <div style={{ display: 'flex', alignItems: 'center' }}>
+            {/* Etiquetas visuales */}
+            {isPreorder && !isSoldOut && (
+              <span style={{
+                position: "absolute",
+                top: "20px",
+                left: "20px",
+                backgroundColor: "#4CAF50",
+                color: "white",
+                padding: "6px 12px",
+                borderRadius: "12px",
+                fontSize: "13px",
+                fontWeight: "bold",
+                zIndex: 3
+              }}>
+                Preventa
+              </span>
+            )}
+
+
+            )}
+
             <img
               src={mainImage}
               alt={product.name}
@@ -94,7 +120,7 @@ export default function ProductDetail({ onAddToCart, onAddToFavorites }) {
                 height: 'auto',
                 objectFit: 'contain',
                 borderRadius: '16px',
-                boxShadow: '0 8px 24px rgba(0,0,0,0.4)',
+
                 cursor: 'zoom-in'
               }}
             />
@@ -104,7 +130,15 @@ export default function ProductDetail({ onAddToCart, onAddToFavorites }) {
         {/* Info */}
         <div style={{ flex: 1, minWidth: '300px' }}>
           <h2 className="product-name" style={{ fontSize: '28px', marginBottom: '10px' }}>{product.name}</h2>
-          <p className="product-price" style={{ fontSize: '22px', marginBottom: '12px', color: '#8fff8f' }}>${product.price} MXN</p>
+          <div style={{ fontSize: '22px', marginBottom: '12px', color: '#8fff8f' }}>
+            {isDiscount && (
+              <span style={{ textDecoration: "line-through", color: "#888", marginRight: "10px" }}>
+                ${product.originalPrice.toFixed(2)} MXN
+              </span>
+            )}
+            ${product.price.toFixed(2)} MXN
+          </div>
+
 
           <div style={{ background: '#2a2f34', padding: '16px', borderRadius: '12px', marginBottom: '20px' }}>
             <p style={{ color: '#ccc', marginBottom: '8px' }}>Lanzamiento estimado: <strong style={{ color: 'white' }}>30 de mayo de 2025</strong></p>
@@ -146,7 +180,21 @@ export default function ProductDetail({ onAddToCart, onAddToFavorites }) {
               >＋</button>
             </div>
             
-            <button className="buy-button" onClick={handleAdd} style={{ padding: '12px 20px', fontSize: '16px' }}>Agregar al carrito</button>
+            <button
+              className="buy-button"
+              onClick={handleAdd}
+              disabled={isSoldOut}
+              style={{
+                padding: '12px 20px',
+                fontSize: '16px',
+                backgroundColor: isSoldOut ? "#ccc" : "#ff3881",
+                cursor: isSoldOut ? "not-allowed" : "pointer",
+                fontWeight: "bold"
+              }}
+            >
+              {isSoldOut ? "Producto agotado" : "Agregar al carrito"}
+            </button>
+
             <button className="buy-button" onClick={() => onAddToFavorites(product)} style={{ padding: '12px 20px', fontSize: '16px' }}>❤</button>
           </div>
 

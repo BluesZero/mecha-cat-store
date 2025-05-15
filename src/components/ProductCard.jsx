@@ -1,68 +1,183 @@
-//ProductCard.jsx
 import React from "react";
 import { Link } from "react-router-dom";
-import "../styles/styles.css";
 
 export default function ProductCard({ product, onAddToCart }) {
+  const isSoldOut = product.stock === 0;
+  const isPreorder = product.preorder;
+  const isDiscount = product.discount;
+
+  const handleClick = (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    onAddToCart(product);
+  };
+
   return (
-    <div className="product-card" style={{ position: "relative" }}              
-      onMouseEnter={(e) => {
-        e.currentTarget.style.background = '#3a3b47';       
+    <Link
+      to={`/product/${product.id}`}
+      className="product-card"
+      style={{
+        textDecoration: "none",
+        color: "inherit",
+        display: "flex",
+        flexDirection: "column",
+        justifyContent: "space-between",
+        background: "#2d2e38",
+        borderRadius: "16px",
+        boxShadow: "0 8px 20px rgba(0, 0, 0, 0.3)",
+        transition: "transform 0.3s ease, box-shadow 0.3s ease",
+        overflow: "hidden",
+        position: "relative",
       }}
-      onMouseLeave={(e) => {
-        e.currentTarget.style.background = '#2d2e38';
-      }}>
+    >
+      {/* Etiqueta Preventa */}
+      {isPreorder && !isSoldOut && (
+        <span
+          style={{
+            position: "absolute",
+            top: "10px",
+            left: "10px",
+            backgroundColor: "#4CAF50",
+            color: "white",
+            padding: "4px 10px",
+            borderRadius: "12px",
+            fontSize: "13px",
+            fontWeight: "bold",
+            zIndex: 3,
+          }}
+        >
+          Preventa
+        </span>
+      )}
 
-      {/* Etiquetas condicionales */}
-      {product.preorder && <span style={tagStyle("#28a745")}>Preventa</span>}
-      {product.stock === 0 && <span style={tagStyle("#dc3545")}>Agotado</span>}
-      {product.discount && <span style={tagStyle("#ffc107", "right")}>Oferta</span>}
+      {/* Badge de descuento */}
+      {isDiscount && product.originalPrice && (
+        <span
+          style={{
+            position: "absolute",
+            top: "10px",
+            right: "10px",
+            backgroundColor: "#ff3881",
+            color: "white",
+            padding: "4px 10px",
+            borderRadius: "12px",
+            fontSize: "13px",
+            fontWeight: "bold",
+            zIndex: 3,
+          }}
+        >
+          -{Math.round(((product.originalPrice - product.price) / product.originalPrice) * 100)}%
+        </span>
+      )}
 
-      <Link
-        to={`/product/${product.id}`}
+      {/* Overlay Agotado */}
+      {isSoldOut && (
+        <div
+          className="sold-out-overlay"
+          style={{
+            position: "absolute",
+            top: 0,
+            left: 0,
+            width: "100%",
+            height: "100%",
+            backgroundColor: "rgba(25, 34, 53, 0.75)",
+            color: "white",
+            fontWeight: "bold",
+            fontSize: "20px",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            zIndex: 2,
+            textTransform: "uppercase",
+          }}
+        >
+          Agotado
+        </div>
+      )}
+
+      {/* Imagen del producto */}
+      <img
+        src={product.image}
+        alt={product.name}
+        className="product-image"
         style={{
-          textDecoration: "none",
-          color: "inherit",
+          width: "100%",
+          height: "240px",
+          objectFit: "contain",
+          borderTopLeftRadius: "16px",
+          borderTopRightRadius: "16px",
+          display: "block",
+        }}
+      />
+
+      {/* Información del producto */}
+      <div
+        className="product-info"
+        style={{
+          padding: "18px",
           flexGrow: 1,
           display: "flex",
           flexDirection: "column",
-          justifyContent: "space-between"
+          justifyContent: "space-between",
         }}
       >
-        <img src={product.image} alt={product.name} className="product-image" />
-        <div style={{ height: "0px", borderBottom: "1px solid #333", margin: "0px 0" }} />
-        <div className="product-info">
-          <div className="product-name">{product.name}</div>
-          <div className="product-price">${product.price} MXN</div>
+        <div
+          className="product-name"
+          style={{
+            fontSize: "17px",
+            fontWeight: 600,
+            color: "white",
+            marginBottom: "8px",
+          }}
+        >
+          {product.name}
         </div>
-      </Link>
 
-      <div style={{ padding: "0 18px 18px", marginTop: "auto" }}>
+        <div
+          className="product-price"
+          style={{
+            fontSize: "16px",
+            marginBottom: "12px",
+          }}
+        >
+          {isDiscount ? (
+            <>
+              <span style={{ color: "#ccc", textDecoration: "line-through", marginRight: "8px" }}>
+                ${product.originalPrice.toFixed(2)}
+              </span>
+              <span style={{ color: "#8fff8f", fontWeight: "bold" }}>
+                ${product.price.toFixed(2)} MXN
+              </span>
+            </>
+          ) : (
+            <span style={{ color: "#8fff8f" }}>
+              ${product.price.toFixed(2)} MXN
+            </span>
+          )}
+        </div>
+
+        {/* Botón */}
         <button
-          className="buy-button"
-          onClick={(e) => {
-            e.preventDefault();
-            e.stopPropagation();
-            onAddToCart(product);
+          onClick={handleClick}
+          disabled={isSoldOut}
+          className={`buy-button ${isSoldOut ? "disabled" : ""}`}
+          style={{
+            backgroundColor: isSoldOut ? "#cccccc" : "#ff3881",
+            color: "white",
+            border: "none",
+            padding: "12px",
+            borderRadius: "30px",
+            cursor: isSoldOut ? "not-allowed" : "pointer",
+            width: "100%",
+            fontSize: "15px",
+            fontWeight: "bold",
+            transition: "background-color 0.3s ease",
+            marginTop: "auto",
           }}
         >
           Agregar al carrito
         </button>
       </div>
-    </div>
+    </Link>
   );
 }
-
-// Estilo de etiqueta reutilizable
-const tagStyle = (color, position = "left") => ({
-  position: "absolute",
-  top: "10px",
-  [position]: "10px",
-  backgroundColor: color,
-  color: "white",
-  padding: "4px 8px",
-  borderRadius: "6px",
-  fontSize: "12px",
-  fontWeight: "bold",
-  zIndex: 10
-});

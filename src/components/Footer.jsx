@@ -21,7 +21,7 @@ export default function Footer() {
       <div style={sectionStyle}>
         <h4 style={titleStyle}>Contacto</h4>
         <p style={textStyle}>📧 contacto@mechacat.com</p>
-        <p style={textStyle}>📍 CDMX, México</p>
+        <p style={textStyle}>📍 Nuevo Leon, México</p>
         <p style={textStyle}>© {new Date().getFullYear()} Mecha Cat</p>
         <div style={{ marginTop: "12px", display: "flex", gap: "12px" }}>
           <a href="https://facebook.com" target="_blank" rel="noopener noreferrer" style={socialIcon}>

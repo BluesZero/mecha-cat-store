@@ -14,7 +14,7 @@ export default function Header({
   return (
     <header>
       <div className="header-left">
-        <h1 style={{ cursor: 'pointer' }} onClick={() => navigate("/")}>Mecha Cat Store</h1>
+        <h1 style={{ cursor: 'pointer' }} onClick={() => navigate("/")}>Meka Cat Store</h1>
         <div style={{ position: 'relative', display: 'flex', alignItems: 'center' }}>
           <img
             src="/img/search.png"
