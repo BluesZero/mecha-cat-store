@@ -142,7 +142,7 @@ export default function ProductCard({ product, onAddToCart }) {
         >
           {isDiscount ? (
             <>
-              <span style={{ color: "#ccc", textDecoration: "line-through", marginRight: "8px" }}>
+              <span style={{ color: "#ccc", textDecoration: "line-through", marginRight: "8px",fontSize: "14px" }}>
                 ${product.originalPrice.toFixed(2)}
               </span>
               <span style={{ color: "#8fff8f", fontWeight: "bold" }}>

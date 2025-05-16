@@ -23,6 +23,7 @@ export default function HomePage({
       <Hero />
 
       {/* Promocionales destacados */}
+      <h2 className="section-title">| Ultimas Expansiones |</h2>
       <section
         className="home-section"
         style={{
@@ -33,21 +34,23 @@ export default function HomePage({
           marginBottom: "40px"
         }}
       >
+        
         <PromoCard
-          image="/img/BBPC.png"
+          image="/img/DRPC.png"
+          alt="Ofertas especiales"
+          link="/franchise/pokemon/product-types/sale/products"
+        />
+        <PromoCard
+          image="/img/JTPC.png"
           alt="Explora Journey Together"
           link="/franchise/pokemon/expansions/journey-together/products"
         />
         <PromoCard
-          image="/img/WFPC.png"
+          image="/img/PEPC.png"
           alt="Explora Prismatic Evolutions"
           link="/franchise/pokemon/expansions/prismatic-evolutions/products"
         />
-        <PromoCard
-          image="/img/BBDR2.png"
-          alt="Ofertas especiales"
-          link="/franchise/pokemon/product-types/sale/products"
-        />
+
       </section>
 
       {/* Slider: Ofertas */}

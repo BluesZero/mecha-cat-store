@@ -40,6 +40,7 @@ export default function ExpansionCard({ id, name, collectionId, image, franchise
             height: '100px',
             objectFit: 'contain',
             marginBottom: '12px',
+            
           }}
         />
       )}

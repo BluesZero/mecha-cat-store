@@ -14,7 +14,8 @@ export default function ExpansionSelector() {
           gap: '20px',
           justifyContent: 'center',
           marginTop: '30px',
-          overflowY: 'hidden' 
+          overflowY: 'hidden',
+          
         }}
       >
         {expansions.map((exp) => (

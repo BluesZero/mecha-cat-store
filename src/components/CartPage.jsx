@@ -88,7 +88,7 @@ export default function CartPage({ cart, onRemove, onUpdateQuantity }) {
           </div>
 
           {/* Resumen */}
-          <div style={{ flex: "0 1 280px", backgroundColor: "#2a2f34", borderRadius: "12px", padding: "24px" }}>
+          <div style={{ flex: "0 1 280px", backgroundColor: "#2a2f34", borderRadius: "12px", padding: "24px", maxHeight: "300px" }}>
             <h3 style={{ marginBottom: "20px", fontSize: "22px", color: "white" }}>Resumen del pedido</h3>
             <p style={{ color: "#ccc", marginBottom: "10px" }}>Subtotal: <strong>${subtotal.toFixed(2)}</strong></p>
             <p style={{ color: "#ccc", marginBottom: "10px" }}>Envío: <strong>${shipping.toFixed(2)}</strong></p>
