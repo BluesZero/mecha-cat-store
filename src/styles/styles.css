@@ -311,7 +311,7 @@ header h1 {
 .hero-slider {
   position: relative;
   width: 100%;
-  height: 500px;           /* 👈 usar height fijo en lugar de max-height */
+  height: 100%;           /* 👈 usar height fijo en lugar de max-height */
   overflow: hidden;
   margin-bottom: 60px;
 }

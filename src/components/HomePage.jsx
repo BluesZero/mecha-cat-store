@@ -36,7 +36,7 @@ export default function HomePage({
       >
         
         <PromoCard
-          image="/img/DRPC.png"
+          image="/img/TMPC.png"
           alt="Ofertas especiales"
           link="/franchise/pokemon/product-types/sale/products"
         />

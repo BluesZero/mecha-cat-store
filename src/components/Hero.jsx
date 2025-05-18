@@ -5,17 +5,17 @@ import "../styles/styles.css";
 
 const banners = [
   {
-    image: "/img/bak2.png",
+    image: "/img/bna.png",
     alt: "Destined Rivals ya disponible",
     link: "/franchise/pokemon/expansions/destined-rivals/products",
   },
   {
-    image: "/img/JT.png",
+    image: "/img/bna.png",
     alt: "Explora todos los productos Pokémon",
     link: "/franchise/pokemon/expansions/journey-together/products",
   },
   {
-    image: "/img/PE.png",
+    image: "/img/bna.png",
     alt: "Booster Box de Journey Together",
     link: "/product/pk-boosterbox-journey-together",
   },
