@@ -5,7 +5,7 @@ export default function NavBar() {
   return (
     <nav className="main-nav">
       <Link to="/">Inicio</Link>
-      <Link to="/franchise/pokemon/expansions/journey-together/products">Journey Together</Link>
+      <Link to="/franchise/pokemon/expansions/destined-rivals/products">Destined Rivals</Link>
       <Link to="/franchise/pokemon/product-types">Productos Pokémon</Link>
       <Link to="/franchise/pokemon/expansions">Expansiones Pokémon</Link>
       <Link to="/explore">Otros TCG</Link> {/* Puedes actualizar cuando tengas data de Digimon, etc. */}

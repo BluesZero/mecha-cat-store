@@ -1,0 +1,312 @@
+mecha-cat-store/
+├── README.md
+├── package-lock.json
+├── package.json
+├── public
+│   ├── favicon.ico
+│   ├── img
+│   │   ├── 20250324_121507_78a14876-107c-4dc7-ab80-eead9990846a.webp
+│   │   ├── 2nd.png
+│   │   ├── BBDR2.png
+│   │   ├── BBPC.png
+│   │   ├── DR3PBK.webp
+│   │   ├── DR3PBZ.webp
+│   │   ├── DRBAN.jpg
+│   │   ├── DRBB.jpg
+│   │   ├── DRBB.webp
+│   │   ├── DRBD.webp
+│   │   ├── DRBDF.webp
+│   │   ├── DRBP.webp
+│   │   ├── DRETB.jpg
+│   │   ├── DRETB.webp
+│   │   ├── DRETB2.webp
+│   │   ├── DRETB3.webp
+│   │   ├── DRETB4.webp
+│   │   ├── DRETB5.webp
+│   │   ├── DRLogo.png
+│   │   ├── DRPC.png
+│   │   ├── JT.png
+│   │   ├── JT3PBS.webp
+│   │   ├── JT3PBY.webp
+│   │   ├── JTB&B.webp
+│   │   ├── JTBB.webp
+│   │   ├── JTBD.webp
+│   │   ├── JTBP.webp
+│   │   ├── JTETB.jpg
+│   │   ├── JTETB.webp
+│   │   ├── JTLogo.png
+│   │   ├── JTPC.png
+│   │   ├── JTT.png
+│   │   ├── OFETB.jpg
+│   │   ├── PCBG.png
+│   │   ├── PE.png
+│   │   ├── PEB.png
+│   │   ├── PEB.webp
+│   │   ├── PEBB.webp
+│   │   ├── PEETB.jpg
+│   │   ├── PEETB.webp
+│   │   ├── PEETB2.webp
+│   │   ├── PELOGO.png
+│   │   ├── PELOGO.webp
+│   │   ├── PEPC.png
+│   │   ├── PFETB.jpg
+│   │   ├── PRETB.jpg
+│   │   ├── PRETB2.jpg
+│   │   ├── PokemonLogo.webp
+│   │   ├── PokemonTCG-Scarlet_Violet-DestinedRivals-BoosterBox_36Packs.webp
+│   │   ├── Riftbound.png
+│   │   ├── RiftboundLogo.png
+│   │   ├── SCLogo.png
+│   │   ├── SFETB.jpg
+│   │   ├── SFLogo.png
+│   │   ├── SPETB.jpg
+│   │   ├── SPLogo.png
+│   │   ├── TFLogo.png
+│   │   ├── TMETB.jpg
+│   │   ├── TMPC.png
+│   │   ├── TPLogo.png
+│   │   ├── WFPC.png
+│   │   ├── ac5f04c7e9285633e8320fc89c77f653.jpg
+│   │   ├── amex.svg
+│   │   ├── back.png
+│   │   ├── bak2.png
+│   │   ├── banna.sai
+│   │   ├── bbcard-Photoroom (1).png
+│   │   ├── bbcard-Photoroom (2).png
+│   │   ├── bbcard-Photoroom.png
+│   │   ├── bbcard.png
+│   │   ├── bkg.png
+│   │   ├── black-bolt-home.png
+│   │   ├── bn.png
+│   │   ├── bna.png
+│   │   ├── cart.png
+│   │   ├── cat2.jpg
+│   │   ├── e.png
+│   │   ├── icon.png
+│   │   ├── img
+│   │   │   ├── 20250324_121507_78a14876-107c-4dc7-ab80-eead9990846a.webp
+│   │   │   ├── DRBDF.webp
+│   │   │   ├── DRETB.jpg
+│   │   │   ├── DRLogo.png
+│   │   │   ├── JTETB.jpg
+│   │   │   ├── JTLogo.png
+│   │   │   ├── OFETB.jpg
+│   │   │   ├── PEETB.jpg
+│   │   │   ├── PELOGO.png
+│   │   │   ├── PELOGO.webp
+│   │   │   ├── PFETB.jpg
+│   │   │   ├── PRETB.jpg
+│   │   │   ├── PRETB2.jpg
+│   │   │   ├── PokemonLogo.webp
+│   │   │   ├── PokemonTCG-Scarlet_Violet-DestinedRivals-BoosterBox_36Packs.webp
+│   │   │   ├── Riftbound.png
+│   │   │   ├── RiftboundLogo.png
+│   │   │   ├── SCLogo.png
+│   │   │   ├── SFETB.jpg
+│   │   │   ├── SFLogo.png
+│   │   │   ├── SPETB.jpg
+│   │   │   ├── SPLogo.png
+│   │   │   ├── TFLogo.png
+│   │   │   ├── TMETB.jpg
+│   │   │   ├── TPLogo.png
+│   │   │   ├── WFPC.png
+│   │   │   ├── ac5f04c7e9285633e8320fc89c77f653.jpg
+│   │   │   ├── back.png
+│   │   │   ├── bak2.png
+│   │   │   ├── banners
+│   │   │   ├── bkg.png
+│   │   │   ├── e.png
+│   │   │   ├── franchises
+│   │   │   │   ├── PokemonLogo.webp
+│   │   │   │   └── RiftboundLogo.png
+│   │   │   ├── icons
+│   │   │   │   ├── cart.png
+│   │   │   │   ├── icon.png
+│   │   │   │   ├── search.png
+│   │   │   │   └── wish.png
+│   │   │   ├── payment
+│   │   │   │   ├── amex.svg
+│   │   │   │   ├── mastercard.svg
+│   │   │   │   ├── paypal.svg
+│   │   │   │   └── visa.svg
+│   │   │   ├── products
+│   │   │   │   ├── black-bolt
+│   │   │   │   │   ├── 6632392_sd.webp
+│   │   │   │   │   ├── 6632394ld.webp
+│   │   │   │   │   ├── 6632397ld.webp
+│   │   │   │   │   ├── BLBO-BB.webp
+│   │   │   │   │   ├── BLBO-BP.webp
+│   │   │   │   │   ├── BLBO-Binder.webp
+│   │   │   │   │   ├── BLBO-ETB.png
+│   │   │   │   │   ├── CombinedMeme_06052025070542.png
+│   │   │   │   │   ├── Pokemon_TCG_Scarlet_Violet—Black_Bolt_and_Scarlet_Violet—White_Flare_Logo.png
+│   │   │   │   │   ├── SPOILER_6632394_sd.webp
+│   │   │   │   │   ├── SPOILER_6632397_sd.webp
+│   │   │   │   │   ├── Screenshot_20250506_084737_Gallery.webp
+│   │   │   │   │   ├── UNOVA-POSTER.webp
+│   │   │   │   │   ├── UNOVA-VICTINI.webp
+│   │   │   │   │   ├── WHFL-BB.webp
+│   │   │   │   │   ├── WHFL-BP.webp
+│   │   │   │   │   ├── WHFL-Binder.webp
+│   │   │   │   │   ├── WHFL-ETB.png
+│   │   │   │   │   ├── black-bolt-binder2.webp
+│   │   │   │   │   ├── black-bolt-logo.png
+│   │   │   │   │   ├── nou.webp
+│   │   │   │   │   ├── sv10pt5-banner (1).png
+│   │   │   │   │   ├── sv10pt5-banner.png
+│   │   │   │   │   ├── white-flare-binder2.webp
+│   │   │   │   │   └── white-flare-logo.png
+│   │   │   │   ├── destined-rivals
+│   │   │   │   │   ├── DERI-3PBK.webp
+│   │   │   │   │   ├── DERI-3PBZ.webp
+│   │   │   │   │   ├── DERI-BB.webp
+│   │   │   │   │   ├── DERI-BD.webp
+│   │   │   │   │   ├── DERI-BP.webp
+│   │   │   │   │   ├── DERI-ETB.webp
+│   │   │   │   │   ├── DERI-ETB2.webp
+│   │   │   │   │   ├── DERI-ETB3.webp
+│   │   │   │   │   ├── DERI-ETB4.webp
+│   │   │   │   │   └── DERI-ETB5.webp
+│   │   │   │   ├── japanese
+│   │   │   │   │   ├── BattlePartnersBoosterPackJapanese.webp
+│   │   │   │   │   ├── BattlePartnersJapanese.webp
+│   │   │   │   │   └── Prismatic_Evolution_Banner.webp
+│   │   │   │   ├── journey-together
+│   │   │   │   │   ├── JOTO-3PBS.webp
+│   │   │   │   │   ├── JOTO-3PBY.webp
+│   │   │   │   │   ├── JOTO-B&B.webp
+│   │   │   │   │   ├── JOTO-BB.webp
+│   │   │   │   │   ├── JOTO-BD.webp
+│   │   │   │   │   ├── JOTO-BP.webp
+│   │   │   │   │   ├── JOTO-ETB.webp
+│   │   │   │   │   ├── PokemonTCG-Scarlet_Violet-JourneyTogether-BoosterPack.webp
+│   │   │   │   │   ├── Pokemon_TCG_Scarlet_Violet_Journey_Together_Booster_Wrap_Hop_s_Zacian.webp
+│   │   │   │   │   ├── Pokemon_TCG_Scarlet_Violet_Journey_Together_Booster_Wrap_Iono_s_Bellibolt.webp
+│   │   │   │   │   └── Pokemon_TCG_Scarlet_Violet_Journey_Together_Booster_Wrap_Lillie_s_Clefairy.webp
+│   │   │   │   ├── paldean-fates
+│   │   │   │   │   ├── pokemon-tcg-scarlet-and-violet-paldean-fates-booster-bundle-the-card-vault-1.webp
+│   │   │   │   │   ├── pokemon-tcg-scarlet-and-violet-paldean-fates-elite-trainer-box-the-card-vault-1.webp
+│   │   │   │   │   └── pokemon-tcg-scarlet-and-violet-paldean-fates-elite-trainer-box-the-card-vault-5.webp
+│   │   │   │   ├── paradox-rift
+│   │   │   │   │   ├── pokemon-tcg-scarlet-and-violet-paradox-rift-elite-trainer-box-iron-valiant-the-card-vault-1.webp
+│   │   │   │   │   ├── pokemon-tcg-scarlet-and-violet-paradox-rift-elite-trainer-box-iron-valiant-the-card-vault-2.webp
+│   │   │   │   │   ├── pokemon-tcg-scarlet-and-violet-paradox-rift-elite-trainer-box-roaring-moon-the-card-vault-1.webp
+│   │   │   │   │   ├── pokemon-tcg-scarlet-and-violet-paradox-rift-elite-trainer-box-roaring-moon-the-card-vault-2.webp
+│   │   │   │   │   ├── pokemon-tcg-scarlet-and-violet-paradox-rift-elite-trainer-box-roaring-moon-the-card-vault-3.webp
+│   │   │   │   │   ├── pokemon-tcg-scarlet-and-violet-paradox-rift-elite-trainer-box-roaring-moon-the-card-vault-4.webp
+│   │   │   │   │   ├── pokemon-tcg-scarlet-and-violet-paradox-rift-elite-trainer-box-roaring-moon-the-card-vault-5.webp
+│   │   │   │   │   └── pokemon-tcg-scarlet-and-violet-paradox-rift-elite-trainer-box-roaring-moon-the-card-vault-6.webp
+│   │   │   │   ├── prismatic-evolutions
+│   │   │   │   │   ├── PREV-BB.webp
+│   │   │   │   │   ├── PREV-BP.webp
+│   │   │   │   │   ├── PREV-ETB.webp
+│   │   │   │   │   ├── PREV-ETB2.webp
+│   │   │   │   │   ├── PREV-SB.webp
+│   │   │   │   │   ├── PREV-SPC.webp
+│   │   │   │   │   ├── PokemonTCG-Scarlet_Violet-PrismaticEvolutions-BoosterPack2.webp
+│   │   │   │   │   ├── PokemonTCG-Scarlet_Violet-PrismaticEvolutions-BoosterPack3.webp
+│   │   │   │   │   └── PokemonTCG-Scarlet_Violet-PrismaticEvolutions-BoosterPack4.webp
+│   │   │   │   ├── shrouded-fable
+│   │   │   │   │   ├── Pokemon_TCG_Scarlet_Violet_Shrouded_Fable_Booster_Bundle.webp
+│   │   │   │   │   ├── pokemon-tcg-scarlet-violet-shrouded-fable-elite-trainer-box-back.webp
+│   │   │   │   │   ├── pokemon_tcg_scarlet_violet-shrouded_fable_booster_wrap_fezandipiti-high.webp
+│   │   │   │   │   ├── pokemon_tcg_scarlet_violet-shrouded_fable_booster_wrap_munkidori-high.webp
+│   │   │   │   │   ├── pokemon_tcg_scarlet_violet-shrouded_fable_booster_wrap_okidogi-high.webp
+│   │   │   │   │   ├── pokemon_tcg_scarlet_violet-shrouded_fable_booster_wrap_pecharunt-high.webp
+│   │   │   │   │   └── pokemon_tcg_scarlet_violet-shrouded_fable_elite_trainer_box-high_1-removebg.webp
+│   │   │   │   ├── stellar-crown
+│   │   │   │   │   ├── image11_f082bfc2-7c6b-486c-bc70-2d34c45c8f9f.webp
+│   │   │   │   │   ├── image8_861b95bf-fb6f-47c5-ad95-e64e19b39c06.webp
+│   │   │   │   │   ├── image9_e1675d36-0d0e-4c07-acd7-b5acd1fc144b (1).webp
+│   │   │   │   │   └── image9_e1675d36-0d0e-4c07-acd7-b5acd1fc144b.webp
+│   │   │   │   ├── surging-sparks
+│   │   │   │   │   ├── PokemonTCG-Scarlet_Violet-SurgingSparks-BoosterBox_36Packs.webp
+│   │   │   │   │   ├── PokemonTCG-Scarlet_Violet-SurgingSparks-BoosterPack1.webp
+│   │   │   │   │   ├── PokemonTCG-Scarlet_Violet-SurgingSparks-BoosterPack2.webp
+│   │   │   │   │   ├── PokemonTCG-Scarlet_Violet-SurgingSparks-BoosterPack3.webp
+│   │   │   │   │   ├── PokemonTCG-Scarlet_Violet-SurgingSparks-BoosterPack4.webp
+│   │   │   │   │   └── etb.webp
+│   │   │   │   ├── temporal-forces
+│   │   │   │   │   ├── pokemon-tcg-scarlet-and-violet-temporal-forces-booster-box-36-packs-the-card-vault-1.webp
+│   │   │   │   │   ├── pokemon-tcg-scarlet-and-violet-temporal-forces-booster-box-36-packs-the-card-vault-3.webp
+│   │   │   │   │   ├── pokemon-tcg-scarlet-and-violet-temporal-forces-booster-box-36-packs-the-card-vault-4.webp
+│   │   │   │   │   ├── pokemon-tcg-scarlet-and-violet-temporal-forces-booster-box-36-packs-the-card-vault-5.webp
+│   │   │   │   │   ├── pokemon-tcg-scarlet-and-violet-temporal-forces-booster-box-36-packs-the-card-vault-6.webp
+│   │   │   │   │   ├── pokemon-tcg-scarlet-and-violet-temporal-forces-booster-box-36-packs-the-card-vault-7.webp
+│   │   │   │   │   ├── pokemon-tcg-scarlet-and-violet-temporal-forces-elite-trainer-box-iron-leaves-the-card-vault-1.webp
+│   │   │   │   │   ├── pokemon-tcg-scarlet-and-violet-temporal-forces-elite-trainer-box-iron-leaves-the-card-vault-2.webp
+│   │   │   │   │   ├── pokemon-tcg-scarlet-and-violet-temporal-forces-elite-trainer-box-walking-wake-the-card-vault-1.webp
+│   │   │   │   │   └── pokemon-tcg-scarlet-and-violet-temporal-forces-elite-trainer-box-walking-wake-the-card-vault-2.webp
+│   │   │   │   ├── twilight-masquerade
+│   │   │   │   └── white-flare
+│   │   │   └── promocard
+│   │   │       ├── BBDR2.png
+│   │   │       ├── BBPC.png
+│   │   │       ├── JTPC.png
+│   │   │       ├── TMPC.png
+│   │   │       └── WFPC.png
+│   │   ├── mastercard.svg
+│   │   ├── one_piece.webp
+│   │   ├── paypal.svg
+│   │   ├── pokemon.svg
+│   │   ├── riftbound.webp
+│   │   ├── search.png
+│   │   ├── tcg-pattern - copia.png
+│   │   ├── tcg-pattern-BW.png
+│   │   ├── tcg-pattern-nb.png
+│   │   ├── tcg-pattern-ns.png
+│   │   ├── tcg-pattern.png
+│   │   ├── visa.svg
+│   │   ├── wish.png
+│   │   └── x2.png
+│   ├── index.html
+│   ├── logo192.png
+│   ├── logo512.png
+│   ├── manifest.json
+│   └── robots.txt
+└── src
+    ├── App.css
+    ├── App.js
+    ├── App.test.js
+    ├── components
+    │   ├── Account
+    │   │   ├── Account.jsx
+    │   │   ├── OrdersTab.jsx
+    │   │   └── ProfileTab.jsx
+    │   ├── AddProduct.jsx
+    │   ├── Auth.jsx
+    │   ├── CartPage.jsx
+    │   ├── ExpansionCard.jsx
+    │   ├── ExpansionSelector.jsx
+    │   ├── Footer.jsx
+    │   ├── FranchiseCard.jsx
+    │   ├── FranchiseSelector.jsx
+    │   ├── Header.jsx
+    │   ├── Hero.jsx
+    │   ├── HomePage.jsx
+    │   ├── NavBar.jsx
+    │   ├── ProductCard.jsx
+    │   ├── ProductDetail.jsx
+    │   ├── ProductGrid.jsx
+    │   ├── ProductList.jsx
+    │   ├── ProductSlider.jsx
+    │   ├── ProductTypeCard.jsx
+    │   ├── ProductTypeSelector.jsx
+    │   └── PromoCard.jsx
+    ├── data
+    │   ├── collections.json
+    │   ├── expansions.json
+    │   ├── franchises.json
+    │   ├── productTypes.json
+    │   ├── products.json
+    │   └── users.json
+    ├── index.css
+    ├── index.js
+    ├── lib
+    │   └── supabase.js
+    ├── logo.svg
+    ├── main.jsx
+    ├── reportWebVitals.js
+    ├── setupTests.js
+    └── styles
+        └── styles.css

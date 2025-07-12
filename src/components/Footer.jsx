@@ -22,7 +22,7 @@ export default function Footer() {
         <h4 style={titleStyle}>Contacto</h4>
         <p style={textStyle}>📧 contacto@mechacat.com</p>
         <p style={textStyle}>📍 Nuevo Leon, México</p>
-        <p style={textStyle}>© {new Date().getFullYear()} Mecha Cat</p>
+        <p style={textStyle}>© {new Date().getFullYear()} Meka Cat Store</p>
         <div style={{ marginTop: "12px", display: "flex", gap: "12px" }}>
           <a href="https://facebook.com" target="_blank" rel="noopener noreferrer" style={socialIcon}>
             <img width="50" height="50" src="https://img.icons8.com/ios/50/FFFFFF/facebook--v1.png" alt="facebook--v1"/>
@@ -31,7 +31,7 @@ export default function Footer() {
             <img width="50" height="50" src="https://img.icons8.com/ios/50/FFFFFF/instagram-new--v1.png" alt="instagram-new--v1"/>
           </a>
           <a href="https://twitter.com" target="_blank" rel="noopener noreferrer" style={socialIcon}>
-            <img width="50" height="50" src="https://img.icons8.com/ios/50/FFFFFF/twitterx--v2.png" alt="twitterx--v2"/>
+            <img width="50" height="50" src="https://img.icons8.com/ios/50/FFFFFF/tiktok--v1.png" alt="twitterx--v2"/>
           </a>
         </div>
       </div>
