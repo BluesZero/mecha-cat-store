@@ -277,5 +277,26 @@
     "available": true,
     "releaseDate": "2025-05-30",
     "tags": ["Preventa", "Elite Trainer Box", "Destined Rivals"]
+  },
+    {
+    "id": "pk-spc-prismatic-evolutions",
+    "name": "Prismatic Evolutions Super Special Collection",
+    "franchiseId": "pokemon",
+    "collectionId": "scarlet-violet",
+    "expansionId": "prismatic-evolutions",
+    "productTypeId": "premium-collection",
+    "type": "expansions",
+    "price": 2990,
+    "originalPrice": 3300,
+    "discount": false,
+    "image": "/img/img/products/prismatic-evolutions/PREV-SPC.webp",
+    "images": ["/img/img/products/prismatic-evolutions/PREV-SPC.webp", "/img/img/products/prismatic-evolutions/PREV-SPC-2.webp", "/img/img/products/prismatic-evolutions/PREV-SPC-3.webp", "/img/img/products/prismatic-evolutions/PREV-SPC-4.webp", "/img/img/products/prismatic-evolutions/PREV-SPC-5.webp", "/img/img/products/prismatic-evolutions/PREV-SPC-6.webp", "/img/img/products/prismatic-evolutions/PREV-SPC-7.webp"],
+    "description": "La caja de colección incluye cartas especiales como Garchomp ex de Cynthia, Ho-Oh ex de Ethan, Metagross ex de Steven, y Mewtwo ex del Team Rocket. Cada booster contiene múltiples cartas para enriquecer tu colección y estrategia.",
+    "stock": 25,
+    "limitPerCustomer": 1,
+    "preorder": true,
+    "available": true,
+    "releaseDate": "2025-05-30",
+    "tags": ["Preventa", "Elite Trainer Box", "Destined Rivals"]
   }
 ]
