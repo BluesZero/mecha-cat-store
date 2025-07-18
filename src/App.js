@@ -1,11 +1,9 @@
-// Importación de dependencias principales
 import React, { useState, useEffect } from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { supabase } from "./lib/supabase";
 
-// Hook para obtener datos desde Supabase
 import { useSupabaseData } from "./hooks/useSupabaseData";
 
-// Componentes de UI y páginas
 import Header from "./components/Header";
 import NavBar from "./components/NavBar";
 import HomePage from "./components/HomePage";
@@ -29,7 +27,6 @@ function App() {
 
   const { data: rawProducts = [], loading, refetch } = useSupabaseData("products");
 
-  // ✅ Normalización de campos para adaptarse a componentes
   const normalizeProduct = (p) => ({
     ...p,
     price: Number(p.price),
@@ -43,10 +40,37 @@ function App() {
 
   const products = rawProducts.map(normalizeProduct);
 
+  // Cargar sesión activa desde Supabase
   useEffect(() => {
-    const savedUser = JSON.parse(localStorage.getItem("mechacat_user"));
-    if (savedUser) setUser(savedUser);
+    supabase.auth.getUser().then(({ data }) => {
+      if (data?.user) {
+        setUser(buildUser(data.user));
+      }
+    });
   }, []);
+
+  const buildUser = (rawUser) => {
+    const meta = rawUser.user_metadata || {};
+    return {
+      id: rawUser.id,
+      email: rawUser.email,
+      username: meta.username || "",
+      isAdmin: meta.isAdmin || false,
+      name: meta.name || "Sin nombre",
+      lastname: meta.lastname || "Sin apellido",
+      phone: meta.phone || "",
+      orders: meta.orders || [],
+      favorites: meta.favorites || [],
+      address: meta.address || {
+        street: "",
+        city: "",
+        state: "",
+        zip: "",
+        country: ""
+      },
+      joinedAt: rawUser.created_at
+    };
+  };
 
   const filteredProducts = products.filter((p) =>
     p.name.toLowerCase().includes(searchQuery.toLowerCase())
@@ -85,13 +109,20 @@ function App() {
     );
   };
 
-  const handleLoginSuccess = (loggedUser) => {
-    setUser(loggedUser);
+  const handleLoginSuccess = (rawUser) => {
+    setUser(buildUser(rawUser));
   };
 
-  const handleLogout = () => {
-    localStorage.removeItem("mechacat_user");
+  const handleLogout = async () => {
+    await supabase.auth.signOut();
     setUser(null);
+  };
+
+  const handleProfileUpdate = async () => {
+    const { data } = await supabase.auth.getUser();
+    if (data?.user) {
+      setUser(buildUser(data.user));
+    }
   };
 
   return (
@@ -157,7 +188,12 @@ function App() {
             path="/account"
             element={
               user ? (
-                <Account user={user} onLogout={handleLogout} onShowAddProduct={() => {}} />
+                <Account
+                  user={user}
+                  onLogout={handleLogout}
+                  onShowAddProduct={() => {}}
+                  onProfileUpdate={handleProfileUpdate}
+                />
               ) : (
                 <Auth onLoginSuccess={handleLoginSuccess} />
               )
@@ -166,7 +202,15 @@ function App() {
 
           <Route
             path="/admin/add"
-            element={<AddProduct onProductAdd={refetch} />}
+            element={
+              user?.isAdmin ? (
+                <AddProduct onProductAdd={refetch} />
+              ) : (
+                <p style={{ color: "white", textAlign: "center", padding: "60px" }}>
+                  No tienes acceso
+                </p>
+              )
+            }
           />
 
           <Route
@@ -207,6 +251,7 @@ function App() {
                     user={user}
                     onLogout={handleLogout}
                     onShowAddProduct={() => setShowAddProduct(true)}
+                    onProfileUpdate={handleProfileUpdate}
                   />
                 )
               ) : (

@@ -4,7 +4,8 @@ import { useNavigate } from "react-router-dom";
 import ProfileTab from "./ProfileTab";
 import OrdersTab from "./OrdersTab";
 
-export default function Account({ user, onLogout }) {
+export default function Account({ user, onLogout, onProfileUpdate }) {
+
   const navigate = useNavigate();
   const [activeTab, setActiveTab] = useState("profile");
 
@@ -99,7 +100,8 @@ export default function Account({ user, onLogout }) {
           borderRadius: "12px",
           boxShadow: "0 0 10px rgba(0,0,0,0.3)"
         }}>
-          {activeTab === "profile" && <ProfileTab user={user} />}
+          {activeTab === "profile" && <ProfileTab user={user} onProfileUpdate={onProfileUpdate} />
+}
           {activeTab === "orders" && <OrdersTab orders={user.orders || []} />}
         </main>
       </div>
