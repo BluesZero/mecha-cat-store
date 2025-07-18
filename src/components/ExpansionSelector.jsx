@@ -5,7 +5,7 @@ import ExpansionCard from "./ExpansionCard";
 
 export default function ExpansionSelector() {
   return (
-    <div style={{ paddingTop: '60px', maxWidth: '1300px', margin: '0 auto' }}>
+    <div  className="page-fade" style={{ paddingTop: '60px', maxWidth: '1300px', margin: '0 auto' }}>
       <h2 className="section-title">| Selecciona una expansión |</h2>
       <div
         style={{

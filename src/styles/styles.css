@@ -380,3 +380,19 @@ textarea {
 .page-fade {
   animation: fadeInUp 0.6s ease-out both;
 }*/
+
+/* styles.css */
+@keyframes fadeInPage {
+  from {
+    opacity: 0;
+    transform: scale(0.98);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.page-fade {
+  animation: fadeInPage 0.5s ease-out;
+}

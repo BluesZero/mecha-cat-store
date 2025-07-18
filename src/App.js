@@ -2,10 +2,10 @@
 import React, { useState, useEffect } from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
-// Carga de datos iniciales
-import productsData from "./data/products.json";
+// Hook para obtener datos desde Supabase
+import { useSupabaseData } from "./hooks/useSupabaseData";
 
-// Importación de componentes principales de UI y páginas
+// Componentes de UI y páginas
 import Header from "./components/Header";
 import NavBar from "./components/NavBar";
 import HomePage from "./components/HomePage";
@@ -21,27 +21,37 @@ import ExpansionSelector from "./components/ExpansionSelector";
 import "./styles/styles.css";
 
 function App() {
-  
-  //Usamos el hook useState para el estado del carrito, favoritos, usuario, búsqueda y productos
-  const [cart, setCart] = useState([]);                   // Lista de productos en el carrito de compras
-  const [favorites, setFavorites] = useState([]);         // Lista de productos marcados como favoritos
-  const [user, setUser] = useState(null);                 // Usuario autenticado (null si no ha iniciado sesión)
-  const [searchQuery, setSearchQuery] = useState("");     // Texto actual del campo de búsqueda
-  const [products, setProducts] = useState(productsData); // Lista de productos cargados desde el JSON
+  const [cart, setCart] = useState([]);
+  const [favorites, setFavorites] = useState([]);
+  const [user, setUser] = useState(null);
+  const [searchQuery, setSearchQuery] = useState("");
   const [showAddProduct, setShowAddProduct] = useState(false);
 
-  // Recupera sesión guardada del usuario al montar el componente
+  const { data: rawProducts = [], loading, refetch } = useSupabaseData("products");
+
+  // ✅ Normalización de campos para adaptarse a componentes
+  const normalizeProduct = (p) => ({
+    ...p,
+    price: Number(p.price),
+    originalPrice: Number(p.original_price),
+    productTypeId: p.product_type_id,
+    expansionId: p.expansion_id,
+    franchiseId: p.franchise_id,
+    image: p.image,
+    images: p.images || [],
+  });
+
+  const products = rawProducts.map(normalizeProduct);
+
   useEffect(() => {
     const savedUser = JSON.parse(localStorage.getItem("mechacat_user"));
     if (savedUser) setUser(savedUser);
   }, []);
 
-  // Filtra productos por nombre según el valor del input de búsqueda
   const filteredProducts = products.filter((p) =>
     p.name.toLowerCase().includes(searchQuery.toLowerCase())
   );
 
-  // Agrega productos al carrito, acumulando cantidades si ya existen
   const handleAddToCart = (product) => {
     setCart((prev) => {
       const existing = prev.find((p) => p.id === product.id);
@@ -57,22 +67,16 @@ function App() {
     });
   };
 
-  //Ofertas
-  const specialOffers = products.filter((p) => p.discount === true);
-
-  // Agrega producto a favoritos si aún no está incluido
   const handleAddToFavorites = (product) => {
     if (!favorites.some((p) => p.id === product.id)) {
       setFavorites((prev) => [...prev, product]);
     }
   };
-  
-  // Elimina un producto del carrito según su ID
+
   const handleRemoveFromCart = (id) => {
     setCart((prev) => prev.filter((p) => p.id !== id));
   };
 
-  //Controla la pagina del carrito
   const handleUpdateQuantity = (id, newQuantity) => {
     setCart((prev) =>
       prev.map((item) =>
@@ -81,28 +85,22 @@ function App() {
     );
   };
 
-
-  // Maneja inicio de sesión exitoso
   const handleLoginSuccess = (loggedUser) => {
     setUser(loggedUser);
   };
 
-  // Cierra sesión y limpia datos del usuario en localStorage
   const handleLogout = () => {
     localStorage.removeItem("mechacat_user");
     setUser(null);
   };
 
-  // Componente principal envuelto en Router para habilitar navegación por rutas
   return (
     <Router>
       <div className="app">
-        {/* Banner superior de anuncio */}
         <div className="top-banner">
           <a href="/">¡Journey Together ya está aquí!</a>
         </div>
 
-        {/* Cabecera con buscador y contador de carrito */}
         <Header
           cartCount={cart.reduce((acc, item) => acc + item.quantity, 0)}
           searchQuery={searchQuery}
@@ -110,29 +108,30 @@ function App() {
           filteredProducts={filteredProducts}
         />
 
-        {/* Barra de navegación principal */}
         <NavBar />
 
-        {/* Rutas de la aplicación */}
         <Routes>
-
-          {/* Página principal con sliders por expansión */}
           <Route
             path="/"
             element={
-              <HomePage
-                destinedRivals={products.filter((p) => p.expansionId === "destined-rivals")}
-                journeyTogether={products.filter((p) => p.expansionId === "journey-together")}
-                newArrivals={products.filter((p) => p.type === "newArrivals")}
-                specialOffers={specialOffers}
-                onAddToCart={handleAddToCart}
-                onAddToFavorites={handleAddToFavorites}
-                onProductClick={() => {}}
-              />
+              loading ? (
+                <p style={{ color: 'white', textAlign: 'center', padding: '60px' }}>
+                  Cargando productos...
+                </p>
+              ) : (
+                <HomePage
+                  destinedRivals={products.filter((p) => p.expansionId === "destined-rivals")}
+                  journeyTogether={products.filter((p) => p.expansionId === "journey-together")}
+                  newArrivals={products.filter((p) => p.type === "newArrivals")}
+                  specialOffers={products.filter((p) => p.discount === true)}
+                  onAddToCart={handleAddToCart}
+                  onAddToFavorites={handleAddToFavorites}
+                  onProductClick={() => {}}
+                />
+              )
             }
           />
 
-          {/* Detalle de producto individual */}
           <Route
             path="/product/:id"
             element={
@@ -143,61 +142,45 @@ function App() {
             }
           />
 
-          {/* Página de carrito */}
           <Route
             path="/cart"
             element={
-              <CartPage cart={cart} onRemove={handleRemoveFromCart} onUpdateQuantity={handleUpdateQuantity}/>
+              <CartPage
+                cart={cart}
+                onRemove={handleRemoveFromCart}
+                onUpdateQuantity={handleUpdateQuantity}
+              />
             }
           />
 
-          {/* Página de cuenta o login según estado de sesión */}
           <Route
             path="/account"
             element={
               user ? (
-                <Account
-                  user={user}
-                  onLogout={handleLogout}
-                  onShowAddProduct={() => {}}
-                />
+                <Account user={user} onLogout={handleLogout} onShowAddProduct={() => {}} />
               ) : (
                 <Auth onLoginSuccess={handleLoginSuccess} />
               )
             }
           />
 
-          {/* Página para agregar productos (acceso administrativo) */}
           <Route
             path="/admin/add"
-            element={
-              <AddProduct
-                onProductAdd={(newProduct) =>
-                  setProducts((prev) => [...prev, newProduct])
-                }
-              />
-            }
+            element={<AddProduct onProductAdd={refetch} />}
           />
 
-          {/* Grid de productos filtrado por expansión */}
           <Route
             path="/franchise/:franchiseId/expansions/:expansionId/products"
             element={<ProductGrid onAddToCart={handleAddToCart} />}
           />
 
-          {/* Grid de productos filtrado por tipo */}
           <Route
             path="/franchise/:franchiseId/product-types/:typeId/products"
             element={<ProductGrid onAddToCart={handleAddToCart} />}
           />
 
-          {/* Explorador general de franquicias */}
-          <Route
-            path="/explore"
-            element={<FranchiseSelector />}
-          />
+          <Route path="/explore" element={<FranchiseSelector />} />
 
-          {/* Selector de tipos de producto dentro de una franquicia */}
           <Route
             path="/franchise/:franchiseId/product-types"
             element={<ProductTypeSelector />}
@@ -214,9 +197,9 @@ function App() {
               user ? (
                 showAddProduct ? (
                   <AddProduct
-                    onProductAdd={(newProduct) => {
-                      setProducts((prev) => [...prev, newProduct]);
-                      setShowAddProduct(false); // volver a cuenta después
+                    onProductAdd={() => {
+                      refetch();
+                      setShowAddProduct(false);
                     }}
                   />
                 ) : (
@@ -231,11 +214,7 @@ function App() {
               )
             }
           />
-
-
         </Routes>
-
-
       </div>
     </Router>
   );

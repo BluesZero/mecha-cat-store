@@ -1,4 +1,3 @@
-// src/components/ProductSlider.jsx
 import React from 'react';
 import Slider from 'react-slick';
 import ProductCard from './ProductCard';
@@ -48,7 +47,12 @@ const CustomNextArrow = ({ onClick }) => (
   </button>
 );
 
-export default function ProductSlider({ products, onAddToCart, onAddToFavorites, onProductClick }) {
+export default function ProductSlider({
+  products,
+  onAddToCart,
+  onAddToFavorites,
+  onProductClick,
+}) {
   const settings = {
     dots: false,
     infinite: true,
@@ -61,7 +65,7 @@ export default function ProductSlider({ products, onAddToCart, onAddToFavorites,
   };
 
   return (
-    <div className="slider-viewport">
+    <div className="slider-viewport" style={{ padding: '20px 0' }}>
       <div className="slider-wrapper">
         <div className="product-slider">
           <Slider {...settings}>

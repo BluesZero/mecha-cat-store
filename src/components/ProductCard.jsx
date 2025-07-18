@@ -12,6 +12,12 @@ export default function ProductCard({ product, onAddToCart }) {
     onAddToCart(product);
   };
 
+  // ✅ Asegurarse de obtener la imagen principal correctamente
+  const mainImage =
+    Array.isArray(product.images) && product.images.length > 0
+      ? product.images[0]
+      : product.image;
+
   return (
     <Link
       to={`/product/${product.id}`}
@@ -66,7 +72,10 @@ export default function ProductCard({ product, onAddToCart }) {
             zIndex: 3,
           }}
         >
-          -{Math.round(((product.originalPrice - product.price) / product.originalPrice) * 100)}%
+          -{Math.round(
+            ((product.originalPrice - product.price) / product.originalPrice) * 100
+          )}
+          %
         </span>
       )}
 
@@ -97,7 +106,7 @@ export default function ProductCard({ product, onAddToCart }) {
 
       {/* Imagen del producto */}
       <img
-        src={product.image}
+        src={mainImage}
         alt={product.name}
         className="product-image"
         style={{
@@ -142,7 +151,14 @@ export default function ProductCard({ product, onAddToCart }) {
         >
           {isDiscount ? (
             <>
-              <span style={{ color: "#ccc", textDecoration: "line-through", marginRight: "8px",fontSize: "14px" }}>
+              <span
+                style={{
+                  color: "#ccc",
+                  textDecoration: "line-through",
+                  marginRight: "8px",
+                  fontSize: "14px",
+                }}
+              >
                 ${product.originalPrice.toFixed(2)}
               </span>
               <span style={{ color: "#8fff8f", fontWeight: "bold" }}>
@@ -156,7 +172,6 @@ export default function ProductCard({ product, onAddToCart }) {
           )}
         </div>
 
-        {/* Botón */}
         <button
           onClick={handleClick}
           disabled={isSoldOut}

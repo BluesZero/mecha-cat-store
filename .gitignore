@@ -8,6 +8,7 @@ node_modules/
 
 # Local environment variables
 .env
+.env.local
 
 # System files
 .DS_Store

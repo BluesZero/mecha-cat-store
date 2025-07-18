@@ -8,7 +8,7 @@ export default function NavBar() {
       <Link to="/franchise/pokemon/expansions/destined-rivals/products">Destined Rivals</Link>
       <Link to="/franchise/pokemon/product-types">Productos Pokémon</Link>
       <Link to="/franchise/pokemon/expansions">Expansiones Pokémon</Link>
-      <Link to="/explore">Otros TCG</Link> {/* Puedes actualizar cuando tengas data de Digimon, etc. */}
+      {/*<Link to="/explore">Otros TCG</Link>  Puedes actualizar cuando tengas data de Digimon, etc. */}
       <Link to="/franchise/pokemon/product-types/preorder/products">Preventas</Link>  {/* Puedes implementar filtro por "preorder": true */}
       <Link to="/franchise/pokemon/product-types/sale/products">Ofertas</Link>    {/* Puedes usar tags o campo "discount": true */}
     </nav>

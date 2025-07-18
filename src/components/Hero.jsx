@@ -10,8 +10,8 @@ const banners = [
     link: "/franchise/pokemon/expansions/destined-rivals/products",
   },
   {
-    image: "/img/bna.png",
-    alt: "Explora todos los productos Pokémon",
+    image: "/img/bna2.png",
+    alt: "White Flare y Black Bolt a la vuelta",
     link: "/franchise/pokemon/expansions/journey-together/products",
   },
   {
