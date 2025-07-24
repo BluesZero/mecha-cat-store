@@ -1,11 +1,56 @@
 // components/CartPage.jsx
 import React from "react";
+import { useNavigate } from "react-router-dom";
+import { supabase } from "../lib/supabase";
 import "../styles/styles.css";
 
-export default function CartPage({ cart, onRemove, onUpdateQuantity }) {
+export default function CartPage({ cart = [], onRemove, onUpdateQuantity, onClear }) {
+  const navigate = useNavigate();
+
   const subtotal = cart.reduce((acc, item) => acc + item.price * item.quantity, 0);
-  const shipping = 99;
+  const shipping = 0;
   const total = subtotal + shipping;
+
+  const handleCheckout = async () => {
+    const { data: authData } = await supabase.auth.getUser();
+    const user = authData?.user;
+    if (!user) return alert("Debes iniciar sesión para finalizar tu compra.");
+
+    const { data: address } = await supabase
+      .from("addresses")
+      .select("*")
+      .eq("user_id", user.id)
+      .eq("is_default", true)
+      .single();
+
+    if (!address) return alert("Debes registrar una dirección predeterminada.");
+
+    const { data: order, error: orderError } = await supabase
+      .from("orders")
+      .insert({
+        user_id: user.id,
+        total,
+        status: "Pendiente",
+        created_at: new Date().toISOString()
+      })
+      .select("id")
+      .single();
+
+    if (orderError || !order) return alert("Error al crear el pedido");
+
+    const itemsToInsert = cart.map((item) => ({
+      order_id: order.id,
+      product_id: item.id,
+      quantity: item.quantity,
+      price: item.price
+    }));
+
+    const { error: itemsError } = await supabase.from("order_items").insert(itemsToInsert);
+    if (itemsError) return alert("Error al guardar los productos del pedido");
+
+    onClear?.(); // Limpia el carrito si todo fue exitoso
+    navigate(`/checkout/${order.id}`);
+  };
 
   return (
     <div>
@@ -13,7 +58,6 @@ export default function CartPage({ cart, onRemove, onUpdateQuantity }) {
 
       <div className="container" style={{ maxWidth: "1200px", margin: "0 auto", padding: "40px 20px" }}>
         <div style={{ display: "flex", flexWrap: "wrap", gap: "40px", justifyContent: "space-between" }}>
-          
           {/* Tabla de productos */}
           <div style={{ flex: "1 1 700px" }}>
             <table style={{ width: "100%", borderCollapse: "collapse", color: "white" }}>
@@ -94,7 +138,9 @@ export default function CartPage({ cart, onRemove, onUpdateQuantity }) {
             <p style={{ color: "#ccc", marginBottom: "10px" }}>Envío: <strong>${shipping.toFixed(2)}</strong></p>
             <hr style={{ margin: "20px 0", borderColor: "#444" }} />
             <p style={{ fontSize: "18px", fontWeight: "bold", color: "white" }}>Total: ${total.toFixed(2)}</p>
-            <button className="buy-button" style={{ marginTop: "20px", width: "100%" }}>Finalizar compra</button>
+            <button className="buy-button" style={{ marginTop: "20px", width: "100%" }} onClick={handleCheckout}>
+              Finalizar compra
+            </button>
           </div>
         </div>
       </div>

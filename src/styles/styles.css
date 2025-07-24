@@ -396,3 +396,43 @@ textarea {
 .page-fade {
   animation: fadeInPage 0.5s ease-out;
 }
+
+/* estilos checkout.jsx*/
+
+.checkout-container {
+  padding: 40px;
+  max-width: 800px;
+  margin: 0 auto;
+  background-color: var(--color-dark);
+  color: white;
+  font-family: var(--font-main);
+}
+
+.checkout-title {
+  font-size: 24px;
+  margin-bottom: 15px;
+  color: var(--color-accent);
+}
+
+.checkout-subtitle {
+  margin-top: 30px;
+  font-size: 18px;
+  color: var(--color-hover-text);
+}
+
+.checkout-product-list {
+  list-style: disc;
+  padding-left: 20px;
+  margin-top: 10px;
+}
+
+.checkout-product-item {
+  margin-bottom: 10px;
+}
+
+.loading-text {
+  color: white;
+  text-align: center;
+  padding: 60px;
+  font-size: 18px;
+}

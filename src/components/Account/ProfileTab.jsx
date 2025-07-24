@@ -2,24 +2,23 @@
 import React, { useState } from "react";
 import { supabase } from "../../lib/supabase";
 
-export default function ProfileTab({ user, onProfileUpdate }) {
+export default function ProfileTab({ user, address, onProfileUpdate }) {
   const [form, setForm] = useState({
     name: user.name || "",
     lastname: user.lastname || "",
     phone: user.phone || "",
     address: {
-      street: user.address?.street || "",
-      city: user.address?.city || "",
-      state: user.address?.state || "",
-      zip: user.address?.zip || "",
-      country: user.address?.country || "",
+      street: address?.street || "",
+      city: address?.city || "",
+      state: address?.state || "",
+      zip: address?.zip || "",
+      country: address?.country || "",
     },
   });
 
   const [editing, setEditing] = useState(false);
   const [status, setStatus] = useState("");
   const [showToast, setShowToast] = useState(false);
-  const recentOrders = [...(user.orders || [])].slice(-3).reverse();
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -37,16 +36,49 @@ export default function ProfileTab({ user, onProfileUpdate }) {
   const handleSave = async () => {
     setStatus("Guardando...");
 
-    const { error } = await supabase.auth.updateUser({
-      data: {
+    // Actualizar perfil
+    const { error: profileError } = await supabase
+      .from("profiles")
+      .update({
         name: form.name,
         lastname: form.lastname,
         phone: form.phone,
-        address: form.address,
-      },
-    });
+      })
+      .eq("id", user.id);
 
-    if (error) {
+    // Actualizar dirección principal
+    let addressError = null;
+
+    if (address) {
+      // UPDATE dirección existente
+      const { error } = await supabase
+        .from("addresses")
+        .update({
+          street: form.address.street,
+          city: form.address.city,
+          state: form.address.state,
+          zip: form.address.zip,
+          country: form.address.country,
+        })
+        .eq("id", address.id);
+      addressError = error;
+    } else {
+      // INSERT nueva dirección como default
+      const { error } = await supabase
+        .from("addresses")
+        .insert({
+          user_id: user.id,
+          street: form.address.street,
+          city: form.address.city,
+          state: form.address.state,
+          zip: form.address.zip,
+          country: form.address.country,
+          is_default: true,
+        });
+      addressError = error;
+    }
+
+    if (profileError || addressError) {
       setStatus("❌ Error al guardar");
     } else {
       onProfileUpdate?.();
@@ -76,7 +108,7 @@ export default function ProfileTab({ user, onProfileUpdate }) {
               <p><strong>Nombre:</strong> {user.name} {user.lastname}</p>
               <p><strong>Email:</strong> {user.email}</p>
               <p><strong>Teléfono:</strong> {user.phone || "No registrado"}</p>
-              <p><strong>Miembro desde:</strong> {new Date(user.joinedAt).toLocaleDateString()}</p>
+              <p><strong>Miembro desde:</strong> {new Date(user.created_at).toLocaleDateString()}</p>
             </>
           )}
         </div>
@@ -92,11 +124,11 @@ export default function ProfileTab({ user, onProfileUpdate }) {
               <input name="address.zip" value={form.address.zip} onChange={handleChange} placeholder="Código Postal" style={inputStyle} />
               <input name="address.country" value={form.address.country} onChange={handleChange} placeholder="País" style={inputStyle} />
             </>
-          ) : user.address ? (
+          ) : address ? (
             <>
-              <p>{user.address.street}</p>
-              <p>{user.address.city}, {user.address.state}</p>
-              <p>{user.address.zip}, {user.address.country}</p>
+              <p>{address.street}</p>
+              <p>{address.city}, {address.state}</p>
+              <p>{address.zip}, {address.country}</p>
             </>
           ) : (
             <p>No has registrado dirección.</p>
@@ -118,54 +150,6 @@ export default function ProfileTab({ user, onProfileUpdate }) {
       )}
 
       {status && <p style={{ color: "#8fff8f", marginTop: "16px" }}>{status}</p>}
-
-      {/* Últimos pedidos */}
-      <h2 style={{ margin: "40px 0 20px" }}>🕒 Últimos pedidos</h2>
-      <div style={{ border: "1px solid #444", borderRadius: "10px", overflow: "hidden" }}>
-        {recentOrders.length === 0 ? (
-          <p style={{ padding: '20px' }}>No tienes pedidos registrados.</p>
-        ) : (
-          recentOrders.map(order => (
-            <div
-              key={order.orderId}
-              style={{
-                display: "flex",
-                justifyContent: "space-between",
-                padding: "14px 20px",
-                background: "#1e1f26",
-                borderBottom: "1px solid #333",
-                alignItems: "center"
-              }}
-            >
-              <div>
-                <strong>#{order.orderId}</strong><br />
-                <small>{new Date(order.date).toLocaleDateString()}</small>
-              </div>
-              <div><strong>${order.total.toFixed(2)}</strong></div>
-              <div>
-                <span style={{
-                  backgroundColor:
-                    order.status === "Enviado" ? "#28a745" :
-                    order.status === "Pendiente" ? "#ffc107" : "#007bff",
-                  color: "white",
-                  padding: "4px 8px",
-                  borderRadius: "6px",
-                  fontSize: "13px"
-                }}>{order.status}</span>
-              </div>
-              <button style={{
-                background: "transparent",
-                border: "none",
-                color: "#ff3881",
-                cursor: "pointer",
-                fontSize: "14px"
-              }}>
-                Ver detalles
-              </button>
-            </div>
-          ))
-        )}
-      </div>
 
       {/* Toast */}
       {showToast && (

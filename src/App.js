@@ -16,6 +16,7 @@ import ProductGrid from "./components/ProductGrid";
 import FranchiseSelector from "./components/FranchiseSelector";
 import ProductTypeSelector from "./components/ProductTypeSelector";
 import ExpansionSelector from "./components/ExpansionSelector";
+import CheckoutPage from "./components/CheckoutPage";
 import "./styles/styles.css";
 
 function App() {
@@ -233,6 +234,11 @@ function App() {
           <Route
             path="/franchise/:franchiseId/expansions"
             element={<ExpansionSelector />}
+          />
+
+          <Route 
+            path="/checkout/:orderId" 
+            element={<CheckoutPage />} 
           />
 
           <Route

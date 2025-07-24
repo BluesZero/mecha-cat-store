@@ -1,13 +1,80 @@
 // components/Account/Account.jsx
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { supabase } from "../../lib/supabase";
 import ProfileTab from "./ProfileTab";
 import OrdersTab from "./OrdersTab";
+import AddressesTab from "./AddressesTab";
 
-export default function Account({ user, onLogout, onProfileUpdate }) {
-
+export default function Account({ onLogout }) {
   const navigate = useNavigate();
   const [activeTab, setActiveTab] = useState("profile");
+
+  const [user, setUser] = useState(null);
+  const [address, setAddress] = useState(null);
+  const [orders, setOrders] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const loadUserData = async () => {
+      setLoading(true);
+      const { data: authData, error: authError } = await supabase.auth.getUser();
+      const authUser = authData?.user;
+
+      if (!authUser) {
+        onLogout?.();
+        return;
+      }
+
+      const { data: profile } = await supabase
+        .from("profiles")
+        .select("*")
+        .eq("id", authUser.id)
+        .single();
+
+      const { data: addr } = await supabase
+        .from("addresses")
+        .select("*")
+        .eq("user_id", authUser.id)
+        .eq("is_default", true)
+        .single();
+
+      const { data: userOrders } = await supabase
+        .from("orders")
+        .select("*")
+        .eq("user_id", authUser.id)
+        .order("created_at", { ascending: false });
+
+      setUser({ ...authUser, ...profile });
+      setAddress(addr || null);
+      setOrders(userOrders || []);
+      setLoading(false);
+    };
+
+    loadUserData();
+  }, []);
+
+  const refreshProfile = async () => {
+    const { data: profile } = await supabase
+      .from("profiles")
+      .select("*")
+      .eq("id", user.id)
+      .single();
+
+    const { data: addr } = await supabase
+      .from("addresses")
+      .select("*")
+      .eq("user_id", user.id)
+      .eq("is_default", true)
+      .single();
+
+    setUser((prev) => ({ ...prev, ...profile }));
+    setAddress(addr || null);
+  };
+
+  if (loading || !user) {
+    return <p style={{ padding: "40px", color: "white" }}>Cargando cuenta...</p>;
+  }
 
   const navButton = (label, tab, icon) => (
     <button
@@ -56,6 +123,7 @@ export default function Account({ user, onLogout, onProfileUpdate }) {
             {navButton("Mi perfil", "profile", "👤")}
             {navButton("Favoritos", "favorites", "❤️")}
             {navButton("Pedidos", "orders", "📦")}
+            {navButton("Direcciones", "addresses", "🏠")}
             {navButton("Configuración", "settings", "⚙️")}
             <hr style={{ borderColor: "#444", margin: "12px 0" }} />
             <button
@@ -73,7 +141,7 @@ export default function Account({ user, onLogout, onProfileUpdate }) {
             </button>
           </nav>
 
-          {user?.isAdmin && (
+          {user?.is_admin && (
             <button
               onClick={() => navigate("/admin/add")}
               style={{
@@ -100,11 +168,17 @@ export default function Account({ user, onLogout, onProfileUpdate }) {
           borderRadius: "12px",
           boxShadow: "0 0 10px rgba(0,0,0,0.3)"
         }}>
-          {activeTab === "profile" && <ProfileTab user={user} onProfileUpdate={onProfileUpdate} />
-}
-          {activeTab === "orders" && <OrdersTab orders={user.orders || []} />}
+          {activeTab === "profile" && (
+            <ProfileTab user={user} address={address} onProfileUpdate={refreshProfile} />
+          )}
+          {activeTab === "orders" && (
+            <OrdersTab orders={orders} />
+          )}
+          {activeTab === "addresses" && (
+            <AddressesTab userId={user.id} />
+          )}
         </main>
       </div>
     </div>
   );
-} // fin
+}

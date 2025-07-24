@@ -35,13 +35,29 @@ export default function Auth({ onLoginSuccess }) {
       return setError("Completa todos los campos");
     }
 
+    // Validar que el username no esté en uso
+    const { data: existingUsername } = await supabase
+      .from("profiles")
+      .select("username")
+      .eq("username", username)
+      .maybeSingle();
+
+    if (existingUsername) {
+      return setError("Ese nombre de usuario ya está en uso");
+    }
+
     // Registrar usuario en Supabase Auth
     const { data, error: signUpError } = await supabase.auth.signUp({
       email,
       password
     });
 
-    if (signUpError) return setError("Auth error: " + signUpError.message);
+    if (signUpError) {
+      if (signUpError.message.includes("User already registered")) {
+        return setError("Ese correo ya está registrado");
+      }
+      return setError("Auth error: " + signUpError.message);
+    }
 
     const user = data.user;
     if (!user) return setError("No se obtuvo el usuario tras el registro");
@@ -59,7 +75,7 @@ export default function Auth({ onLoginSuccess }) {
 
     if (profileError) {
       console.error(profileError);
-      return setError("Database error saving new user");
+      return setError("Error al guardar el perfil");
     }
 
     const { data: profile } = await supabase
