@@ -317,49 +317,70 @@ mecha-cat-store/
 │   ├── logo512.png
 │   ├── manifest.json
 │   └── robots.txt
-└── src
-    ├── App.css
-    ├── App.js
-    ├── App.test.js
-    ├── components
-    │   ├── Account
-    │   │   ├── Account.jsx
-    │   │   ├── OrdersTab.jsx
-    │   │   └── ProfileTab.jsx
-    │   ├── AddProduct.jsx
-    │   ├── Auth.jsx
-    │   ├── CartPage.jsx
-    │   ├── ExpansionCard.jsx
-    │   ├── ExpansionSelector.jsx
-    │   ├── Footer.jsx
-    │   ├── FranchiseCard.jsx
-    │   ├── FranchiseSelector.jsx
-    │   ├── Header.jsx
-    │   ├── Hero.jsx
-    │   ├── HomePage.jsx
-    │   ├── NavBar.jsx
-    │   ├── ProductCard.jsx
-    │   ├── ProductDetail.jsx
-    │   ├── ProductGrid.jsx
-    │   ├── ProductList.jsx
-    │   ├── ProductSlider.jsx
-    │   ├── ProductTypeCard.jsx
-    │   ├── ProductTypeSelector.jsx
-    │   └── PromoCard.jsx
-    ├── data
-    │   ├── collections.json
-    │   ├── expansions.json
-    │   ├── franchises.json
-    │   ├── productTypes.json
-    │   ├── products.json
-    │   └── users.json
-    ├── index.css
-    ├── index.js
-    ├── lib
-    │   └── supabase.js
-    ├── logo.svg
-    ├── main.jsx
-    ├── reportWebVitals.js
-    ├── setupTests.js
-    └── styles
-        └── styles.css
+├── src
+│   ├── App.css
+│   ├── App.js
+│   ├── App.test.js
+│   ├── api
+│   │   └── create-checkout-session.js
+│   ├── components
+│   │   ├── Account
+│   │   │   ├── Account.jsx
+│   │   │   ├── AddressesTab.jsx
+│   │   │   ├── OrdersTab.jsx
+│   │   │   └── ProfileTab.jsx
+│   │   ├── AddProduct.jsx
+│   │   ├── Auth.jsx
+│   │   ├── CartPage.jsx
+│   │   ├── CheckoutPage.jsx
+│   │   ├── ExpansionCard.jsx
+│   │   ├── ExpansionSelector.jsx
+│   │   ├── Footer.jsx
+│   │   ├── FranchiseCard.jsx
+│   │   ├── FranchiseSelector.jsx
+│   │   ├── Header.jsx
+│   │   ├── Hero.jsx
+│   │   ├── HomePage.jsx
+│   │   ├── NavBar.jsx
+│   │   ├── ProductCard.jsx
+│   │   ├── ProductDetail.jsx
+│   │   ├── ProductGrid.jsx
+│   │   ├── ProductList.jsx
+│   │   ├── ProductSlider.jsx
+│   │   ├── ProductTypeCard.jsx
+│   │   ├── ProductTypeSelector.jsx
+│   │   ├── PromoCard.jsx
+│   │   └── checkout
+│   │       ├── CartSummary.jsx
+│   │       ├── CheckoutFlow.jsx
+│   │       ├── ConfirmationStep.jsx
+│   │       ├── PaymentStep.jsx
+│   │       └── ShippingStep.jsx
+│   ├── data
+│   │   ├── collections.json
+│   │   ├── expansions.json
+│   │   ├── franchises.json
+│   │   ├── productTypes.json
+│   │   ├── products.json
+│   │   └── users.json
+│   ├── hooks
+│   │   └── useSupabaseData.js
+│   ├── index.css
+│   ├── index.js
+│   ├── lib
+│   │   └── supabase.js
+│   ├── logo.svg
+│   ├── main.jsx
+│   ├── reportWebVitals.js
+│   ├── setupTests.js
+│   └── styles
+│       └── styles.css
+└── supabase
+    ├── .temp
+    │   └── cli-latest
+    ├── config.toml
+    └── functions
+        └── create-checkout-session
+            ├── .npmrc
+            ├── deno.json
+            └── index.ts

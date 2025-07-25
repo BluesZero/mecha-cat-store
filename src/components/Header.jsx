@@ -1,4 +1,4 @@
-//Header.jsx
+// src/components/Header.jsx
 import React from "react";
 import { useNavigate } from "react-router-dom";
 
@@ -14,7 +14,9 @@ export default function Header({
   return (
     <header>
       <div className="header-left">
-        <h1 style={{ cursor: 'pointer' }} onClick={() => navigate("/")}>Meka Cat Store</h1>
+        <h1 style={{ cursor: 'pointer' }} onClick={() => navigate("/")}>
+          Meka Cat Store
+        </h1>
         <div style={{ position: 'relative', display: 'flex', alignItems: 'center' }}>
           <img
             src="/img/search.png"
@@ -32,8 +34,8 @@ export default function Header({
           {searchQuery.length > 0 && filteredProducts.length > 0 && (
             <ul
               style={{
-                border: '1px solid #444', // 👈 delimita el contenedor
-                backdropFilter: 'blur(4px)', // 👈 mejora visual
+                border: '1px solid #444',
+                backdropFilter: 'blur(4px)',
                 position: 'absolute',
                 top: '40px',
                 left: 0,
@@ -63,7 +65,16 @@ export default function Header({
                     borderBottom: '1px solid #333'
                   }}
                 >
-                  <img src={product.image} alt={product.name} style={{ width: '40px', height: '40px', objectFit: 'cover', borderRadius: '6px' }} />
+                  <img
+                    src={product.image}
+                    alt={product.name}
+                    style={{
+                      width: '40px',
+                      height: '40px',
+                      objectFit: 'cover',
+                      borderRadius: '6px'
+                    }}
+                  />
                   <span>{product.name}</span>
                 </li>
               ))}
@@ -86,22 +97,25 @@ export default function Header({
             src="/img/cart.png"
             alt="Carrito"
             className="icon"
-            onClick={() => navigate("/cart")}
+            onClick={() => navigate("/checkout/summary")}
             style={{ cursor: 'pointer' }}
           />
           {cartCount > 0 && (
-            <span style={{
-              position: 'absolute',
-              top: -6,
-              right: -6,
-              background: '#e22c6b',
-              color: 'white',
-              borderRadius: '50%',
-              padding: '2px 6px',
-              fontSize: '12px',
-              fontWeight: 'bold',
-              
-            }}>{cartCount}</span>
+            <span
+              style={{
+                position: 'absolute',
+                top: -6,
+                right: -6,
+                background: '#e22c6b',
+                color: 'white',
+                borderRadius: '50%',
+                padding: '2px 6px',
+                fontSize: '12px',
+                fontWeight: 'bold',
+              }}
+            >
+              {cartCount}
+            </span>
           )}
         </div>
       </nav>

@@ -1,14 +1,12 @@
 import React, { useState, useEffect } from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { supabase } from "./lib/supabase";
-
 import { useSupabaseData } from "./hooks/useSupabaseData";
 
 import Header from "./components/Header";
 import NavBar from "./components/NavBar";
 import HomePage from "./components/HomePage";
 import ProductDetail from "./components/ProductDetail";
-import CartPage from "./components/CartPage";
 import Account from "./components/Account/Account";
 import Auth from "./components/Auth";
 import AddProduct from "./components/AddProduct";
@@ -16,7 +14,8 @@ import ProductGrid from "./components/ProductGrid";
 import FranchiseSelector from "./components/FranchiseSelector";
 import ProductTypeSelector from "./components/ProductTypeSelector";
 import ExpansionSelector from "./components/ExpansionSelector";
-import CheckoutPage from "./components/CheckoutPage";
+import CheckoutFlow from "./components/checkout/CheckoutFlow";
+
 import "./styles/styles.css";
 
 function App() {
@@ -27,6 +26,16 @@ function App() {
   const [showAddProduct, setShowAddProduct] = useState(false);
 
   const { data: rawProducts = [], loading, refetch } = useSupabaseData("products");
+
+  // 🟢 Persistencia del carrito
+  useEffect(() => {
+    const savedCart = JSON.parse(localStorage.getItem("cart"));
+    if (savedCart) setCart(savedCart);
+  }, []);
+
+  useEffect(() => {
+    localStorage.setItem("cart", JSON.stringify(cart));
+  }, [cart]);
 
   const normalizeProduct = (p) => ({
     ...p,
@@ -41,7 +50,6 @@ function App() {
 
   const products = rawProducts.map(normalizeProduct);
 
-  // Cargar sesión activa desde Supabase
   useEffect(() => {
     supabase.auth.getUser().then(({ data }) => {
       if (data?.user) {
@@ -175,17 +183,6 @@ function App() {
           />
 
           <Route
-            path="/cart"
-            element={
-              <CartPage
-                cart={cart}
-                onRemove={handleRemoveFromCart}
-                onUpdateQuantity={handleUpdateQuantity}
-              />
-            }
-          />
-
-          <Route
             path="/account"
             element={
               user ? (
@@ -218,27 +215,27 @@ function App() {
             path="/franchise/:franchiseId/expansions/:expansionId/products"
             element={<ProductGrid onAddToCart={handleAddToCart} />}
           />
-
           <Route
             path="/franchise/:franchiseId/product-types/:typeId/products"
             element={<ProductGrid onAddToCart={handleAddToCart} />}
           />
 
           <Route path="/explore" element={<FranchiseSelector />} />
+          <Route path="/franchise/:franchiseId/product-types" element={<ProductTypeSelector />} />
+          <Route path="/franchise/:franchiseId/expansions" element={<ExpansionSelector />} />
 
+          {/* Checkout completo */}
           <Route
-            path="/franchise/:franchiseId/product-types"
-            element={<ProductTypeSelector />}
+            path="/checkout"
+            element={<CheckoutFlow cart={cart} user={user} onClearCart={() => setCart([])} />}
           />
-
           <Route
-            path="/franchise/:franchiseId/expansions"
-            element={<ExpansionSelector />}
+            path="/checkout/:orderId"
+            element={<CheckoutFlow cart={cart} user={user} onClearCart={() => setCart([])} />}
           />
-
-          <Route 
-            path="/checkout/:orderId" 
-            element={<CheckoutPage />} 
+          <Route
+            path="/checkout/summary"
+            element={<CheckoutFlow cart={cart} user={user} onClearCart={() => setCart([])} />}
           />
 
           <Route
