@@ -1,15 +1,39 @@
 // src/components/checkout/StripeCheckoutForm.jsx
-import React, { useState } from "react";
-import { CardElement, useStripe, useElements } from "@stripe/react-stripe-js";
+import React, { useState, useEffect } from "react";
+import {
+  CardElement,
+  useStripe,
+  useElements,
+  PaymentRequestButtonElement,
+} from "@stripe/react-stripe-js";
 
-export default function StripeCheckoutForm({ amount, onSuccess }) {
+export default function StripeCheckoutForm({ amount, onSuccess, orderId, email }) {
   const stripe = useStripe();
   const elements = useElements();
-
+  const [activeTab, setActiveTab] = useState("card");
+  const [paymentRequest, setPaymentRequest] = useState(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
 
-  const handleSubmit = async (e) => {
+  useEffect(() => {
+    if (stripe) {
+      const pr = stripe.paymentRequest({
+        country: "MX",
+        currency: "mxn",
+        total: { label: "Total", amount: Math.round(amount) },
+        requestPayerName: true,
+        requestPayerEmail: true,
+      });
+
+      pr.canMakePayment().then((result) => {
+        if (result) {
+          setPaymentRequest(pr);
+        }
+      });
+    }
+  }, [stripe, amount]);
+
+  const handleCardSubmit = async (e) => {
     e.preventDefault();
     setError("");
     setLoading(true);
@@ -21,14 +45,13 @@ export default function StripeCheckoutForm({ amount, onSuccess }) {
     }
 
     try {
-      const res = await fetch("http://localhost:5000/api/payment-intent", {
+      const res = await fetch("http://localhost:5000/api/create-payment-intent", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ amount: Math.round(amount) }), // en centavos
+        body: JSON.stringify({ amount: Math.round(amount) }),
       });
 
       const { clientSecret } = await res.json();
-
       if (!clientSecret) throw new Error("No se recibió clientSecret.");
 
       const result = await stripe.confirmCardPayment(clientSecret, {
@@ -51,38 +74,115 @@ export default function StripeCheckoutForm({ amount, onSuccess }) {
   };
 
   return (
-    <form onSubmit={handleSubmit} style={{ display: "flex", flexDirection: "column", gap: "20px" }}>
-      <div
-        style={{
-          padding: "16px",
-          border: "1px solid #555",
-          borderRadius: "8px",
-          backgroundColor: "#1e1f26",
-        }}
-      >
-        <CardElement
-          options={{
-            style: {
-              base: {
-                fontSize: "16px",
-                color: "#fff",
-                "::placeholder": {
-                  color: "#aaa",
-                },
-              },
-              invalid: {
-                color: "#ff6fa1",
-              },
-            },
-          }}
-        />
+    <div style={{ fontFamily: "'Orbitron', sans-serif" }}>
+      {/* 🔘 Tabs de métodos de pago */}
+      <div style={{ display: "flex", gap: "12px", marginBottom: "24px" }}>
+        {["card", "gpay", "paypal"].map((tab) => (
+          <button
+            key={tab}
+            onClick={() => setActiveTab(tab)}
+            style={{
+              padding: "10px 16px",
+              borderRadius: "8px",
+              border: "1px solid #555",
+              background: activeTab === tab ? "#ff3881" : "#1e1f26",
+              color: activeTab === tab ? "#fff" : "#ccc",
+              cursor: "pointer",
+              flex: 1,
+              fontWeight: "bold",
+              textTransform: "capitalize",
+            }}
+          >
+            {tab === "card" ? "Tarjeta" : tab === "gpay" ? "Google / Apple Pay" : "PayPal"}
+          </button>
+        ))}
       </div>
 
-      {error && <p style={{ color: "tomato", fontSize: "14px" }}>{error}</p>}
+      {/* 💳 Tarjeta */}
+      {activeTab === "card" && (
+        <form
+          onSubmit={handleCardSubmit}
+          autoComplete="on"
+          style={{ display: "flex", flexDirection: "column", gap: "20px" }}
+        >
+          <label style={{ fontSize: "0.9rem", color: "#ccc" }}>
+            Número de tarjeta
+          </label>
+          <div
+            style={{
+              padding: "16px",
+              border: "1px solid #555",
+              borderRadius: "10px",
+              backgroundColor: "#121318",
+            }}
+          >
+            <CardElement
+              options={{
+                style: {
+                  base: {
+                    fontSize: "16px",
+                    color: "#ffffff",
+                    "::placeholder": { color: "#888" },
+                  },
+                  invalid: { color: "#ff6fa1" },
+                },
+              }}
+            />
+          </div>
 
-      <button type="submit" className="buy-button" disabled={!stripe || loading}>
-        {loading ? "Procesando..." : "Pagar"}
-      </button>
-    </form>
+          {error && <p style={{ color: "#ff6fa1", fontSize: "0.85rem" }}>{error}</p>}
+
+          <button
+            type="submit"
+            className="buy-button"
+            disabled={!stripe || loading}
+            style={{
+              backgroundColor: "#ff3881",
+              padding: "14px",
+              borderRadius: "25px",
+              border: "none",
+              color: "#fff",
+              fontWeight: "bold",
+              cursor: "pointer",
+              fontSize: "1rem",
+            }}
+          >
+            {loading ? "Procesando..." : "Pagar ahora"}
+          </button>
+        </form>
+      )}
+
+      {/* 🅖 Google Pay / Apple Pay */}
+      {activeTab === "gpay" && (
+        <>
+          {paymentRequest ? (
+            <PaymentRequestButtonElement
+              options={{ paymentRequest }}
+              style={{ paymentRequestButton: { theme: "dark", height: "44px" } }}
+            />
+          ) : (
+            <p style={{ color: "#aaa", marginTop: "10px" }}>
+              Google Pay o Apple Pay no están disponibles en este dispositivo o navegador.
+            </p>
+          )}
+        </>
+      )}
+
+      {/* 🅿️ PayPal (estructura preparada) */}
+      {activeTab === "paypal" && (
+        <div
+          style={{
+            padding: "20px",
+            border: "1px dashed #888",
+            borderRadius: "12px",
+            background: "#2a2f34",
+            color: "#ccc",
+            textAlign: "center",
+          }}
+        >
+          PayPal será habilitado próximamente.
+        </div>
+      )}
+    </div>
   );
 }
