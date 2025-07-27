@@ -120,6 +120,7 @@ export default function CheckoutFlow({ cart, user, onClearCart }) {
                 user={user}
                 cart={cart}
                 orderId={orderId}
+                
                 onSuccess={() => goToStep("confirmation")}
               />
             </motion.div>

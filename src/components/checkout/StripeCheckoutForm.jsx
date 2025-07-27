@@ -1,4 +1,3 @@
-// src/components/checkout/StripeCheckoutForm.jsx
 import React, { useState, useEffect } from "react";
 import {
   CardElement,
@@ -6,6 +5,7 @@ import {
   useElements,
   PaymentRequestButtonElement,
 } from "@stripe/react-stripe-js";
+import { PayPalScriptProvider, PayPalButtons } from "@paypal/react-paypal-js";
 
 export default function StripeCheckoutForm({ amount, onSuccess, orderId, email }) {
   const stripe = useStripe();
@@ -14,6 +14,8 @@ export default function StripeCheckoutForm({ amount, onSuccess, orderId, email }
   const [paymentRequest, setPaymentRequest] = useState(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
+
+  const paypalClientId = process.env.REACT_APP_PAYPAL_CLIENT_ID;
 
   useEffect(() => {
     if (stripe) {
@@ -75,7 +77,7 @@ export default function StripeCheckoutForm({ amount, onSuccess, orderId, email }
 
   return (
     <div style={{ fontFamily: "'Orbitron', sans-serif" }}>
-      {/* 🔘 Tabs de métodos de pago */}
+      {/* Tabs de método de pago */}
       <div style={{ display: "flex", gap: "12px", marginBottom: "24px" }}>
         {["card", "gpay", "paypal"].map((tab) => (
           <button
@@ -98,7 +100,7 @@ export default function StripeCheckoutForm({ amount, onSuccess, orderId, email }
         ))}
       </div>
 
-      {/* 💳 Tarjeta */}
+      {/* Tarjeta */}
       {activeTab === "card" && (
         <form
           onSubmit={handleCardSubmit}
@@ -152,7 +154,38 @@ export default function StripeCheckoutForm({ amount, onSuccess, orderId, email }
         </form>
       )}
 
-      {/* 🅖 Google Pay / Apple Pay */}
+      {/* PayPal */}
+      {activeTab === "paypal" && paypalClientId && (
+        <PayPalScriptProvider options={{ clientId: paypalClientId, currency: "MXN" }}>
+          <div style={{ padding: "16px", border: "1px solid #666", borderRadius: "12px" }}>
+            <PayPalButtons
+              style={{ layout: "vertical", color: "silver", shape: "pill", label: "paypal" }}
+              createOrder={(data, actions) => {
+                return actions.order.create({
+                  purchase_units: [
+                    {
+                      amount: {
+                        value: (amount / 100).toFixed(2), // convertir de centavos
+                        currency_code: "MXN",
+                      },
+                    },
+                  ],
+                });
+              }}
+              onApprove={async (data, actions) => {
+                await actions.order.capture();
+                onSuccess(); // dispara el flujo de éxito igual que Stripe
+              }}
+              onError={(err) => {
+                console.error("PayPal error:", err);
+                setError("Hubo un error con PayPal.");
+              }}
+            />
+          </div>
+        </PayPalScriptProvider>
+      )}
+      
+      {/* Google / Apple Pay */}
       {activeTab === "gpay" && (
         <>
           {paymentRequest ? (
@@ -162,27 +195,13 @@ export default function StripeCheckoutForm({ amount, onSuccess, orderId, email }
             />
           ) : (
             <p style={{ color: "#aaa", marginTop: "10px" }}>
-              Google Pay o Apple Pay no están disponibles en este dispositivo o navegador.
+              Google Pay o Apple Pay no están disponibles en este dispositivo.
             </p>
           )}
         </>
       )}
 
-      {/* 🅿️ PayPal (estructura preparada) */}
-      {activeTab === "paypal" && (
-        <div
-          style={{
-            padding: "20px",
-            border: "1px dashed #888",
-            borderRadius: "12px",
-            background: "#2a2f34",
-            color: "#ccc",
-            textAlign: "center",
-          }}
-        >
-          PayPal será habilitado próximamente.
-        </div>
-      )}
+
     </div>
   );
 }
