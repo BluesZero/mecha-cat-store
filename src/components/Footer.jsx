@@ -20,7 +20,7 @@ export default function Footer() {
 
       <div style={sectionStyle}>
         <h4 style={titleStyle}>Contacto</h4>
-        <p style={textStyle}>📧 contacto@mechacat.com</p>
+        <p style={textStyle}>📧 contacto@mekacatstore.com</p>
         <p style={textStyle}>📍 Nuevo Leon, México</p>
         <p style={textStyle}>© {new Date().getFullYear()} Meka Cat Store</p>
         <div style={{ marginTop: "12px", display: "flex", gap: "12px" }}>
