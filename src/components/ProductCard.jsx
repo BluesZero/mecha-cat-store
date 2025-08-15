@@ -1,15 +1,31 @@
+// src/components/ProductCard.jsx
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";   // 👈 añadido
+import { useToast } from "./ui/useToast";               // 👈 añadido
 
 export default function ProductCard({ product, onAddToCart }) {
   const isSoldOut = product.stock === 0;
   const isPreorder = product.preorder;
   const isDiscount = product.discount;
 
+  const { addToast } = useToast();                      // 👈 nuevo
+  const navigate = useNavigate();                       // 👈 nuevo
+
   const handleClick = (e) => {
     e.preventDefault();
     e.stopPropagation();
     onAddToCart(product);
+
+    // 👇 Toast al agregar
+    addToast({
+      type: "success",
+      icon: "🛒",
+      title: "Agregado al carrito",
+      description: product.name,
+      actionLabel: "Ver carrito",
+      onAction: () => navigate("/checkout/summary"),
+      duration: 2600,
+    });
   };
 
   // ✅ Asegurarse de obtener la imagen principal correctamente

@@ -11,7 +11,7 @@
   --color-hover-text: #ffffff;
   --color-soldout-overlay: rgba(25, 34, 53, 0.75);
   --color-disabled: #cccccc;
-  --font-main: 'Orbitron', sans-serif;
+  --font-main: 'Orbitron';
 }
 
 /* === RESET === */
@@ -91,7 +91,7 @@ header h1 {
 
 /* === NAVIGATION === */
 .main-nav {
-  background-color: #2a342b;
+  background-color: #1e1f26;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -102,7 +102,7 @@ header h1 {
 .main-nav a {
   color: white;
   text-decoration: none;
-  font-weight: 600;
+  font-weight: 400;
   padding: 6px 12px;
   border-radius: 6px;
   transition: background-color 0.3s, color 0.3s, transform 0.2s;
@@ -363,3 +363,127 @@ button:disabled {
     font-size: 14px;
   }
 }
+
+/* 👉 Permitir que las cards “salgan” sin cortarse */
+.product-slider .slick-list {
+  overflow: visible !important;
+  padding-block: 18px 26px; /* espacio extra arriba/abajo para el lift */
+}
+
+/* Por si tu wrapper tenía overflow oculto */
+.slider-viewport,
+.slider-wrapper {
+  overflow: visible;
+}
+
+/* Asegura stacking correcto al hacer hover */
+.product-card {
+  position: relative;
+  z-index: 0;
+  will-change: transform;
+  transition: transform .2s ease, box-shadow .2s ease;
+}
+.product-card:hover {
+  transform: translateY(-8px); /* o tu scale si lo prefieres */
+  z-index: 3;
+}
+
+/* Evita que algún contenedor intermedio recorte */
+.product-slider .slick-track,
+.product-slider .slick-slide {
+  overflow: visible;
+}
+.product-card:hover { transform: translateY(-6px) scale(1.02); }
+
+/* Que los productos puedan “salirse” pero sin tapar las flechas */
+.product-slider .slick-list { overflow: visible; padding-block: 18px 26px; }
+
+/* Flechas siempre por encima y clicables */
+.product-slider .slick-arrow { z-index: 5 !important; }
+
+/* El hover necesita aire vertical, pero recortamos lateralmente */
+.slider-viewport { 
+  position: relative;
+}
+
+/* Recorta HORIZONTAL, deja espacio VERTICAL para el lift del hover */
+.slider-mask {
+  overflow: hidden;                /* 👈 recorta bordes izq/der */
+  padding-block: 18px 26px;        /* 👈 espacio para que la card suba sin cortarse */
+  position: relative;
+}
+
+/* Permitimos que las cards “salgan” dentro de la máscara */
+.product-slider .slick-list,
+.product-slider .slick-track,
+.product-slider .slick-slide {
+  overflow: visible;
+}
+
+/* Flechas siempre arriba y clicables */
+.product-slider .slick-arrow { 
+  z-index: 5 !important; 
+}
+
+/* Hover suave sin romper layout */
+.product-card {
+  position: relative;
+  z-index: 0;
+  will-change: transform;
+  transition: transform .2s ease, box-shadow .2s ease;
+}
+.product-card:hover {
+  transform: translateY(-8px);    /* o translateY(-6px) scale(1.02) si prefieres */
+  z-index: 3;
+}
+
+/* (Opcional) máscara de desvanecimiento en bordes para ocultar clones finos */
+@supports (-webkit-mask-image: linear-gradient(#000,#000)) or (mask-image: linear-gradient(#000,#000)) {
+  .slider-mask {
+    --edge: 24px;
+    -webkit-mask-image: linear-gradient(to right, transparent 0, #000 var(--edge), #000 calc(100% - var(--edge)), transparent 100%);
+            mask-image: linear-gradient(to right, transparent 0, #000 var(--edge), #000 calc(100% - var(--edge)), transparent 100%);
+  }
+}
+
+/* 1. Variables y resets mínimos para que nada tape el fondo */
+:root{
+  --bg1:#0c0f14;          /* base oscura */
+  --bg2:#151a24;          /* base oscura 2 */
+  --grid:rgba(159,122,234,.06); /* líneas sutiles */
+  --glow1:rgba(124,58,237,.18); /* brillo morado */
+  --glow2:rgba(59,130,246,.12); /* brillo azul */
+}
+
+html, body, #root{ min-height:100%; background:transparent; }
+body{ position:relative; }
+
+/* 2. Pseudocapa animada con degradado + grid + brillos */
+body.melee-bg::before{
+  content:"";
+  position:fixed;
+  inset:0;
+  z-index:0;                 /* detrás de todo */
+  pointer-events:none;
+
+  /* Capas: base, brillos, cuadrícula X/Y y un soft-light */
+  background:
+    linear-gradient(120deg, var(--bg1) 0%, var(--bg2) 100%),
+    radial-gradient(60vmax 60vmax at 15% 25%, var(--glow1) 0%, transparent 60%),
+    radial-gradient(48vmax 48vmax at 85% 70%, var(--glow2) 0%, transparent 70%),
+    repeating-linear-gradient(0deg,  var(--grid) 0 1px, transparent 1px 24px),
+    repeating-linear-gradient(90deg, var(--grid) 0 1px, transparent 1px 24px),
+    linear-gradient(140deg, rgba(124,58,237,.10) 0%, rgba(59,130,246,.08) 40%, transparent 70%);
+  background-blend-mode: normal, screen, screen, overlay, overlay, soft-light;
+
+  animation: meleeGridDrift 24s linear infinite;
+  will-change: background-position;
+}
+
+@keyframes meleeGridDrift{
+  0%   { background-position: 0 0, 0 0, 0 0, 0 0, 0 0, 0 0; }
+  100% { background-position: 0 0, 0 0, 0 0, 0 180px, 180px 0, 0 0; }
+}
+
+/* 3. Asegura que el contenedor principal no cubra el fondo */
+.app{ position:relative; z-index:1; background:transparent; }

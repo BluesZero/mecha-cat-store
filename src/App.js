@@ -1,3 +1,4 @@
+// src/App.jsx
 import React, { useState, useEffect } from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { supabase } from "./lib/supabase";
@@ -15,8 +16,10 @@ import FranchiseSelector from "./components/FranchiseSelector";
 import ProductTypeSelector from "./components/ProductTypeSelector";
 import ExpansionSelector from "./components/ExpansionSelector";
 import CheckoutFlow from "./components/checkout/CheckoutFlow";
+import ToastProvider from "./components/ui/ToastProvider";
 
 import "./styles/styles.css";
+import "./styles/loader.css";
 
 function App() {
   const [cart, setCart] = useState([]);
@@ -37,6 +40,11 @@ function App() {
     localStorage.setItem("cart", JSON.stringify(cart));
   }, [cart]);
 
+  useEffect(() => {
+    document.body.classList.add("melee-bg");
+    return () => document.body.classList.remove("melee-bg");
+  }, []);
+  
   const normalizeProduct = (p) => ({
     ...p,
     price: Number(p.price),
@@ -52,9 +60,7 @@ function App() {
 
   useEffect(() => {
     supabase.auth.getUser().then(({ data }) => {
-      if (data?.user) {
-        setUser(buildUser(data.user));
-      }
+      if (data?.user) setUser(buildUser(data.user));
     });
   }, []);
 
@@ -75,9 +81,9 @@ function App() {
         city: "",
         state: "",
         zip: "",
-        country: ""
+        country: "",
       },
-      joinedAt: rawUser.created_at
+      joinedAt: rawUser.created_at,
     };
   };
 
@@ -94,9 +100,8 @@ function App() {
             ? { ...p, quantity: p.quantity + (product.quantity || 1) }
             : p
         );
-      } else {
-        return [...prev, { ...product, quantity: product.quantity || 1 }];
       }
+      return [...prev, { ...product, quantity: product.quantity || 1 }];
     });
   };
 
@@ -118,9 +123,7 @@ function App() {
     );
   };
 
-  const handleLoginSuccess = (rawUser) => {
-    setUser(buildUser(rawUser));
-  };
+  const handleLoginSuccess = (rawUser) => setUser(buildUser(rawUser));
 
   const handleLogout = async () => {
     await supabase.auth.signOut();
@@ -129,142 +132,167 @@ function App() {
 
   const handleProfileUpdate = async () => {
     const { data } = await supabase.auth.getUser();
-    if (data?.user) {
-      setUser(buildUser(data.user));
-    }
+    if (data?.user) setUser(buildUser(data.user));
   };
+  
 
   return (
-    <Router>
-      <div className="app">
-        <div className="top-banner">
-          <a href="/">¡Journey Together ya está aquí!</a>
-        </div>
+    <ToastProvider>
+      <Router>
+        <div className="app">
+          <div className="top-banner">
+            <a href="/">¡Journey Together ya está aquí!</a>
+          </div>
 
-        <Header
-          cartCount={cart.reduce((acc, item) => acc + item.quantity, 0)}
-          searchQuery={searchQuery}
-          setSearchQuery={setSearchQuery}
-          filteredProducts={filteredProducts}
-        />
+          <Header
+            cartCount={cart.reduce((acc, item) => acc + item.quantity, 0)}
+            searchQuery={searchQuery}
+            setSearchQuery={setSearchQuery}
+            filteredProducts={filteredProducts}
+          />
 
-        <NavBar />
+          <NavBar />
 
-        <Routes>
-          <Route
-            path="/"
-            element={
-              loading ? (
-                <p style={{ color: 'white', textAlign: 'center', padding: '60px' }}>
-                  Cargando productos...
-                </p>
-              ) : (
-                <HomePage
-                  destinedRivals={products.filter((p) => p.expansionId === "destined-rivals")}
-                  journeyTogether={products.filter((p) => p.expansionId === "journey-together")}
-                  newArrivals={products.filter((p) => p.type === "newArrivals")}
-                  specialOffers={products.filter((p) => p.discount === true)}
+          <Routes>
+            <Route
+              path="/"
+              element={
+                loading ? (
+                  <div style={{ padding: "60px", display: "flex", justifyContent: "center" }}>
+                    <div className="loader" />
+                  </div>
+                ) : (
+                  <HomePage
+                    destinedRivals={products.filter((p) => p.expansionId === "destined-rivals")}
+                    journeyTogether={products.filter((p) => p.expansionId === "journey-together")}
+                    newArrivals={products.filter((p) => p.type === "newArrivals")}
+                    specialOffers={products.filter((p) => p.discount === true)}
+                    onAddToCart={handleAddToCart}
+                    onAddToFavorites={handleAddToFavorites}
+                    onProductClick={() => {}}
+                  />
+                )
+              }
+            />
+
+            <Route
+              path="/product/:id"
+              element={
+                <ProductDetail
                   onAddToCart={handleAddToCart}
                   onAddToFavorites={handleAddToFavorites}
-                  onProductClick={() => {}}
                 />
-              )
-            }
-          />
+              }
+            />
 
-          <Route
-            path="/product/:id"
-            element={
-              <ProductDetail
-                onAddToCart={handleAddToCart}
-                onAddToFavorites={handleAddToFavorites}
-              />
-            }
-          />
-
-          <Route
-            path="/account"
-            element={
-              user ? (
-                <Account
-                  user={user}
-                  onLogout={handleLogout}
-                  onShowAddProduct={() => {}}
-                  onProfileUpdate={handleProfileUpdate}
-                />
-              ) : (
-                <Auth onLoginSuccess={handleLoginSuccess} />
-              )
-            }
-          />
-
-          <Route
-            path="/admin/add"
-            element={
-              user?.isAdmin ? (
-                <AddProduct onProductAdd={refetch} />
-              ) : (
-                <p style={{ color: "white", textAlign: "center", padding: "60px" }}>
-                  No tienes acceso
-                </p>
-              )
-            }
-          />
-
-          <Route
-            path="/franchise/:franchiseId/expansions/:expansionId/products"
-            element={<ProductGrid onAddToCart={handleAddToCart} />}
-          />
-          <Route
-            path="/franchise/:franchiseId/product-types/:typeId/products"
-            element={<ProductGrid onAddToCart={handleAddToCart} />}
-          />
-
-          <Route path="/explore" element={<FranchiseSelector />} />
-          <Route path="/franchise/:franchiseId/product-types" element={<ProductTypeSelector />} />
-          <Route path="/franchise/:franchiseId/expansions" element={<ExpansionSelector />} />
-
-          {/* Checkout completo */}
-          <Route
-            path="/checkout"
-            element={<CheckoutFlow cart={cart} user={user} onClearCart={() => setCart([])} />}
-          />
-          <Route
-            path="/checkout/:orderId"
-            element={<CheckoutFlow cart={cart} user={user} onClearCart={() => setCart([])} />}
-          />
-          <Route
-            path="/checkout/summary"
-            element={<CheckoutFlow cart={cart} user={user} onClearCart={() => setCart([])} />}
-          />
-
-          <Route
-            path="/account/addproduct"
-            element={
-              user ? (
-                showAddProduct ? (
-                  <AddProduct
-                    onProductAdd={() => {
-                      refetch();
-                      setShowAddProduct(false);
-                    }}
-                  />
-                ) : (
+            <Route
+              path="/account"
+              element={
+                user ? (
                   <Account
                     user={user}
                     onLogout={handleLogout}
-                    onShowAddProduct={() => setShowAddProduct(true)}
+                    onShowAddProduct={() => {}}
                     onProfileUpdate={handleProfileUpdate}
                   />
+                ) : (
+                  <Auth onLoginSuccess={handleLoginSuccess} />
                 )
-              ) : (
-                <Auth onLoginSuccess={handleLoginSuccess} />
-              )
-            }
-          />
-        </Routes>
-      </div>
-    </Router>
+              }
+            />
+
+            <Route
+              path="/admin/add"
+              element={
+                user?.isAdmin ? (
+                  <AddProduct onProductAdd={refetch} />
+                ) : (
+                  <p style={{ color: "white", textAlign: "center", padding: "60px" }}>
+                    No tienes acceso
+                  </p>
+                )
+              }
+            />
+
+            <Route
+              path="/franchise/:franchiseId/expansions/:expansionId/products"
+              element={<ProductGrid onAddToCart={handleAddToCart} />}
+            />
+            <Route
+              path="/franchise/:franchiseId/product-types/:typeId/products"
+              element={<ProductGrid onAddToCart={handleAddToCart} />}
+            />
+
+            <Route path="/explore" element={<FranchiseSelector />} />
+            <Route path="/franchise/:franchiseId/product-types" element={<ProductTypeSelector />} />
+            <Route path="/franchise/:franchiseId/expansions" element={<ExpansionSelector />} />
+
+            {/* Checkout completo */}
+            <Route
+              path="/checkout"
+              element={
+                <CheckoutFlow
+                  cart={cart}
+                  user={user}
+                  onClearCart={() => setCart([])}
+                  onRemoveItem={handleRemoveFromCart}             // ✅ pasa handlers reales
+                  onUpdateCartQuantity={handleUpdateQuantity}     // ✅ pasa handlers reales
+                />
+              }
+            />
+            <Route
+              path="/checkout/:orderId"
+              element={
+                <CheckoutFlow
+                  cart={cart}
+                  user={user}
+                  onClearCart={() => setCart([])}
+                  onRemoveItem={handleRemoveFromCart}
+                  onUpdateCartQuantity={handleUpdateQuantity}
+                />
+              }
+            />
+            <Route
+              path="/checkout/summary"
+              element={
+                <CheckoutFlow
+                  cart={cart}
+                  user={user}
+                  onClearCart={() => setCart([])}
+                  onRemoveItem={handleRemoveFromCart}
+                  onUpdateCartQuantity={handleUpdateQuantity}
+                />
+              }
+            />
+
+            <Route
+              path="/account/addproduct"
+              element={
+                user ? (
+                  showAddProduct ? (
+                    <AddProduct
+                      onProductAdd={() => {
+                        refetch();
+                        setShowAddProduct(false);
+                      }}
+                    />
+                  ) : (
+                    <Account
+                      user={user}
+                      onLogout={handleLogout}
+                      onShowAddProduct={() => setShowAddProduct(true)}
+                      onProfileUpdate={handleProfileUpdate}
+                    />
+                  )
+                ) : (
+                  <Auth onLoginSuccess={handleLoginSuccess} />
+                )
+              }
+            />
+          </Routes>
+        </div>
+      </Router>
+    </ToastProvider>
   );
 }
 

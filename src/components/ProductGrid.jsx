@@ -4,6 +4,7 @@ import { useParams } from 'react-router-dom';
 import { useSupabaseData } from '../hooks/useSupabaseData';
 import ProductCard from './ProductCard';
 import '../styles/styles.css';
+import '../styles/loader.css'; // Asegúrate de importar el loader
 
 export default function ProductGrid({ onAddToCart }) {
   const { franchiseId, expansionId, typeId } = useParams();
@@ -17,17 +18,17 @@ export default function ProductGrid({ onAddToCart }) {
   });
 
   return (
-    <div  className="page-fade" style={{ paddingTop: '60px', maxWidth: '1300px', margin: '0 auto' }}>
+    <div className="page-fade" style={{ paddingTop: '60px', maxWidth: '1300px', margin: '0 auto' }}>
       <h2 className="section-title">
         {loading
-          ? 'Cargando productos...'
+          ? ''
           : `Resultados (${filtered.length}) – ${franchiseId?.toUpperCase()}`}
       </h2>
 
       {loading ? (
-        <p style={{ color: '#ccc', textAlign: 'center' }}>
-          Cargando productos...
-        </p>
+        <div style={{ padding: '60px', display: 'flex', justifyContent: 'center' }}>
+          <div className="loader" />
+        </div>
       ) : filtered.length === 0 ? (
         <p style={{ color: '#ccc', textAlign: 'center' }}>
           No se encontraron productos.

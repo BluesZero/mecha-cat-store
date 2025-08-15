@@ -4,15 +4,20 @@ import { useParams } from 'react-router-dom';
 import { useSupabaseData } from '../hooks/useSupabaseData';
 import ProductTypeCard from './ProductTypeCard';
 import '../styles/styles.css';
+import '../styles/loader.css'; // Asegúrate de tener el loader
 
 export default function ProductTypeSelector() {
   const { franchiseId } = useParams();
 
-  const { data: products, loading: loadingProducts } = useSupabaseData('products');
-  const { data: productTypes, loading: loadingTypes } = useSupabaseData('product_types');
+  const { data: products = [], loading: loadingProducts } = useSupabaseData('products');
+  const { data: productTypes = [], loading: loadingTypes } = useSupabaseData('product_types');
 
   if (loadingProducts || loadingTypes) {
-    return <p style={{ color: 'white', padding: '60px' }}>Cargando tipos de productos...</p>;
+    return (
+      <div style={{ padding: '60px', display: 'flex', justifyContent: 'center' }}>
+        <div className="loader" />
+      </div>
+    );
   }
 
   // Obtener solo los tipos usados en esta franquicia
@@ -30,8 +35,7 @@ export default function ProductTypeSelector() {
 
   return (
     <div
-      className="page-fade"
-      
+      className="page-fade fade-in"
       style={{
         paddingTop: '60px',
         maxWidth: '1300px',

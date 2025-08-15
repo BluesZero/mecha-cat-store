@@ -1,56 +1,157 @@
-import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+// src/components/ProductDetail.jsx
+import React, { useEffect, useMemo, useState } from "react";
+import { useParams, useNavigate } from "react-router-dom";
 import { useSupabaseData } from "../hooks/useSupabaseData";
+import { useToast } from "./ui/useToast";
 import "../styles/styles.css";
 
 export default function ProductDetail({ onAddToCart, onAddToFavorites }) {
   const { id } = useParams();
-  const { data: products, loading } = useSupabaseData("products");
+  const navigate = useNavigate();
+  const { addToast } = useToast();
+  const { data: products = [], loading } = useSupabaseData("products");
 
+  // Producto y datos derivados
   const product = products.find((p) => p.id === id);
-  const images = product?.images?.length ? product.images : [product?.image];
+  const price = Number(product?.price ?? 0);
+  const originalPrice = Number(product?.originalPrice ?? product?.original_price ?? 0);
+  const hasDiscount = Boolean(product?.discount && originalPrice > price);
+  const isPreorder = Boolean(product?.preorder);
+  const stock = typeof product?.stock === "number" ? product.stock : undefined;
+  const isSoldOut = stock === 0;
 
+  const images = useMemo(() => {
+    if (!product) return [];
+    if (Array.isArray(product.images) && product.images.length) return product.images;
+    return product.image ? [product.image] : [];
+  }, [product]);
+
+  // Estado UI
   const [mainImage, setMainImage] = useState(null);
   const [quantity, setQuantity] = useState(1);
   const [showSlider, setShowSlider] = useState(false);
   const [sliderIndex, setSliderIndex] = useState(0);
 
+  // Sync imagen principal
   useEffect(() => {
-    if (images && images.length > 0) {
+    if (images.length) {
       setMainImage(images[0]);
+      setSliderIndex(0);
+    } else {
+      setMainImage(null);
     }
   }, [images]);
 
-  if (loading) return <p style={{ color: "#ccc", padding: "40px" }}>Cargando producto...</p>;
-  if (!product) return <p style={{ color: "#ccc", padding: "40px" }}>Producto no encontrado</p>;
+  // Formateo MXN
+  const fmt = useMemo(
+    () =>
+      new Intl.NumberFormat("es-MX", {
+        style: "currency",
+        currency: "MXN",
+        maximumFractionDigits: 2,
+      }),
+    []
+  );
 
-  const isSoldOut = product.stock === 0;
-  const isPreorder = product.preorder;
-  const isDiscount = product.discount === true && product.originalPrice;
-
+  // Handlers
   const handleAdd = () => {
-    onAddToCart({ ...product, quantity });
+    if (!product) return;
+    const qty = Math.max(1, Math.min(quantity, stock ?? quantity));
+    onAddToCart?.({ ...product, quantity: qty });
+
+    addToast({
+      type: "success",
+      icon: "🛒",
+      title: "Agregado al carrito",
+      description: `${product.name} · x${qty}`,
+      actionLabel: "Ver carrito",
+      onAction: () => navigate("/checkout/summary"),
+      duration: 2600,
+    });
   };
 
   const openSlider = (index) => {
     setSliderIndex(index);
     setShowSlider(true);
   };
-
   const closeSlider = () => setShowSlider(false);
-  const nextSlide = () => setSliderIndex((sliderIndex + 1) % images.length);
-  const prevSlide = () => setSliderIndex((sliderIndex - 1 + images.length) % images.length);
+  const nextSlide = () => setSliderIndex((prev) => (prev + 1) % images.length);
+  const prevSlide = () => setSliderIndex((prev) => (prev - 1 + images.length) % images.length);
 
+  /* -------------------- Loading / Not found -------------------- */
+  if (loading) {
+    return (
+      <section style={{ padding: "60px 20px", maxWidth: 1200, margin: "0 auto" }}>
+        <div
+          style={{
+            background: "#1e1f26",
+            border: "1px solid #2c3139",
+            borderRadius: 16,
+            padding: 24,
+          }}
+        >
+          <div className="pd-skel-header skeleton-line" />
+          <div className="pd-skel-row">
+            <div className="skeleton-block" />
+            <div className="pd-skel-right">
+              <div className="skeleton-line" />
+              <div className="skeleton-line" />
+              <div className="skeleton-line" />
+            </div>
+          </div>
+        </div>
+
+        {/* Skeleton CSS local para 3 líneas */}
+        <style>{`
+          .skeleton-line{
+            height: 16px;
+            border-radius: 8px;
+            background: linear-gradient(90deg, #2a2f34 25%, #343a44 37%, #2a2f34 63%);
+            background-size: 400% 100%;
+            animation: skel 1.2s ease-in-out infinite;
+            margin-bottom: 12px;
+          }
+          .pd-skel-header{ width: 40%; max-width: 300px; }
+          .pd-skel-row{
+            display: grid;
+            grid-template-columns: 520px 1fr;
+            gap: 28px;
+            margin-top: 22px;
+          }
+          .skeleton-block{
+            width: 100%;
+            height: 420px;
+            border-radius: 14px;
+            background: linear-gradient(90deg, #2a2f34 25%, #343a44 37%, #2a2f34 63%);
+            background-size: 400% 100%;
+            animation: skel 1.2s ease-in-out infinite;
+          }
+          .pd-skel-right .skeleton-line:nth-child(1){ width: 80%; height: 24px; }
+          .pd-skel-right .skeleton-line:nth-child(2){ width: 60%; height: 18px; }
+          .pd-skel-right .skeleton-line:nth-child(3){ width: 90%; height: 18px; }
+          @keyframes skel{ 0%{background-position: 100% 0} 100%{background-position: 0 0} }
+          @media (max-width: 980px){
+            .pd-skel-row{ grid-template-columns: 1fr; }
+            .skeleton-block{ height: 300px; }
+          }
+        `}</style>
+      </section>
+    );
+  }
+
+  if (!product) {
+    return <p style={{ color: "#ccc", padding: "40px" }}>Producto no encontrado</p>;
+  }
+
+  /* -------------------- UI principal -------------------- */
   return (
     <div className="container" style={{ padding: "60px 20px", maxWidth: "1300px" }}>
-      {showSlider && (
+      {/* Overlay del slider */}
+      {showSlider && images.length > 0 && (
         <div
           style={{
             position: "fixed",
-            top: 0,
-            left: 0,
-            width: "100vw",
-            height: "100vh",
+            inset: 0,
             backgroundColor: "rgba(0, 0, 0, 0.9)",
             display: "flex",
             alignItems: "center",
@@ -70,22 +171,28 @@ export default function ProductDetail({ onAddToCart, onAddToFavorites }) {
               fontSize: "24px",
               cursor: "pointer",
             }}
+            aria-label="Cerrar galería"
           >
             ✕
           </button>
           <img
             src={images[sliderIndex]}
-            alt="slider"
+            alt="Vista de producto"
             style={{ maxWidth: "90%", maxHeight: "80vh", borderRadius: "10px" }}
           />
           <div style={{ marginTop: "20px" }}>
             <button
               onClick={prevSlide}
               style={{ marginRight: "20px", fontSize: "18px", padding: "10px", cursor: "pointer" }}
+              aria-label="Imagen anterior"
             >
               ←
             </button>
-            <button onClick={nextSlide} style={{ fontSize: "18px", padding: "10px", cursor: "pointer" }}>
+            <button
+              onClick={nextSlide}
+              style={{ fontSize: "18px", padding: "10px", cursor: "pointer" }}
+              aria-label="Imagen siguiente"
+            >
               →
             </button>
           </div>
@@ -93,6 +200,7 @@ export default function ProductDetail({ onAddToCart, onAddToFavorites }) {
       )}
 
       <div style={{ display: "flex", gap: "40px", alignItems: "flex-start", flexWrap: "wrap" }}>
+        {/* Breadcrumb simple */}
         <div style={{ flexBasis: "100%", marginBottom: "30px" }}>
           <div
             style={{
@@ -104,18 +212,19 @@ export default function ProductDetail({ onAddToCart, onAddToFavorites }) {
               backgroundColor: "#1e1f26",
             }}
           >
-            Inicio &gt; Pokémon &gt; Colección &gt; Elite Trainer Box &gt;{" "}
+            Inicio &gt; Pokémon &gt; Colección &gt;{" "}
             <strong style={{ color: "white" }}>{product.name}</strong>
           </div>
         </div>
 
+        {/* Galería */}
         <div style={{ display: "flex", gap: "20px", flex: "0 0 600px", maxWidth: "100%" }}>
           <div style={{ display: "flex", flexDirection: "column", gap: "12px" }}>
             {images.map((img, i) => (
               <img
                 key={i}
                 src={img}
-                alt={`thumb-${i}`}
+                alt={`Miniatura ${i + 1}`}
                 onClick={() => setMainImage(img)}
                 style={{
                   width: "75px",
@@ -129,13 +238,13 @@ export default function ProductDetail({ onAddToCart, onAddToFavorites }) {
             ))}
           </div>
 
-          <div style={{ display: "flex", alignItems: "center" }}>
+          <div style={{ position: "relative", display: "flex", alignItems: "center" }}>
             {isPreorder && !isSoldOut && (
               <span
                 style={{
                   position: "absolute",
-                  top: "20px",
-                  left: "20px",
+                  top: "12px",
+                  left: "12px",
                   backgroundColor: "#4CAF50",
                   color: "white",
                   padding: "6px 12px",
@@ -149,33 +258,42 @@ export default function ProductDetail({ onAddToCart, onAddToFavorites }) {
               </span>
             )}
 
-            <img
-              src={mainImage}
-              alt={product.name}
-              onClick={() => openSlider(images.indexOf(mainImage))}
-              style={{
-                width: "100%",
-                maxWidth: "450px",
-                height: "auto",
-                objectFit: "contain",
-                borderRadius: "16px",
-                cursor: "zoom-in",
-              }}
-            />
+            {mainImage && (
+              <img
+                src={mainImage}
+                alt={product.name}
+                onClick={() => openSlider(images.indexOf(mainImage))}
+                style={{
+                  width: "100%",
+                  maxWidth: "450px",
+                  height: "auto",
+                  objectFit: "contain",
+                  borderRadius: "16px",
+                  cursor: "zoom-in",
+                }}
+              />
+            )}
           </div>
         </div>
 
+        {/* Detalle */}
         <div style={{ flex: 1, minWidth: "300px" }}>
-          <h2 className="product-name" style={{ fontSize: "28px", marginBottom: "10px" }}>
+          <h1 className="product-name" style={{ fontSize: "clamp(22px,2.8vw,32px)", marginBottom: "10px" }}>
             {product.name}
-          </h2>
-          <div style={{ fontSize: "22px", marginBottom: "12px", color: "#8fff8f" }}>
-            {isDiscount && (
-              <span style={{ textDecoration: "line-through", color: "#888", marginRight: "10px" }}>
-                ${product.originalPrice.toFixed(2)} MXN
+          </h1>
+
+          <div style={{ fontSize: "22px", marginBottom: "12px", color: "#8fff8f", display: "flex", gap: 10, alignItems: "baseline" }}>
+            {hasDiscount && (
+              <span style={{ textDecoration: "line-through", color: "#888" }}>
+                {fmt.format(originalPrice)}
               </span>
             )}
-            ${product.price.toFixed(2)} MXN
+            <strong style={{ color: "#8fff8f" }}>{fmt.format(price)}</strong>
+            {typeof stock === "number" && (
+              <span style={{ color: isSoldOut ? "#ffb3bd" : "#aab2bd", fontSize: 14 }}>
+                {isSoldOut ? "Agotado" : `Stock: ${stock}`}
+              </span>
+            )}
           </div>
 
           <div
@@ -187,14 +305,15 @@ export default function ProductDetail({ onAddToCart, onAddToFavorites }) {
             }}
           >
             <p style={{ color: "#ccc", marginBottom: "8px" }}>
-              Lanzamiento estimado:{" "}
-              <strong style={{ color: "white" }}>30 de mayo de 2025</strong>
+              Lanzamiento estimado: <strong style={{ color: "white" }}>30 de mayo de 2025</strong>
             </p>
-            <p style={{ color: "#ccc" }}>Recibe puntos de recompensa con esta compra.</p>
+            <p style={{ color: "#ccc", margin: 0 }}>Recibe puntos de recompensa con esta compra.</p>
           </div>
 
-          <div style={{ display: "flex", alignItems: "center", gap: "16px", marginBottom: "30px" }}>
+          {/* Controles de compra */}
+          <div style={{ display: "flex", alignItems: "center", gap: "16px", marginBottom: "30px", flexWrap: "wrap" }}>
             <div
+              aria-label="Selector de cantidad"
               style={{
                 display: "flex",
                 alignItems: "center",
@@ -213,6 +332,7 @@ export default function ProductDetail({ onAddToCart, onAddToFavorites }) {
                   fontSize: "22px",
                   cursor: "pointer",
                 }}
+                aria-label="Disminuir cantidad"
               >
                 −
               </button>
@@ -220,7 +340,12 @@ export default function ProductDetail({ onAddToCart, onAddToFavorites }) {
                 {quantity}
               </span>
               <button
-                onClick={() => setQuantity((prev) => prev + 1)}
+                onClick={() =>
+                  setQuantity((prev) => {
+                    const next = prev + 1;
+                    return typeof stock === "number" ? Math.min(next, stock) : next;
+                  })
+                }
                 style={{
                   background: "none",
                   border: "none",
@@ -228,6 +353,7 @@ export default function ProductDetail({ onAddToCart, onAddToFavorites }) {
                   fontSize: "22px",
                   cursor: "pointer",
                 }}
+                aria-label="Aumentar cantidad"
               >
                 ＋
               </button>
@@ -240,9 +366,10 @@ export default function ProductDetail({ onAddToCart, onAddToFavorites }) {
               style={{
                 padding: "12px 20px",
                 fontSize: "16px",
-                backgroundColor: isSoldOut ? "#ccc" : "#ff3881",
+                backgroundColor: isSoldOut ? "#777" : "#ff3881",
                 cursor: isSoldOut ? "not-allowed" : "pointer",
-                fontWeight: "bold",
+                fontWeight: "700",
+                fontFamily: "var(--font-app, 'Orbitron', system-ui, sans-serif)",
               }}
             >
               {isSoldOut ? "Producto agotado" : "Agregar al carrito"}
@@ -250,13 +377,20 @@ export default function ProductDetail({ onAddToCart, onAddToFavorites }) {
 
             <button
               className="buy-button"
-              onClick={() => onAddToFavorites(product)}
-              style={{ padding: "12px 20px", fontSize: "16px" }}
+              onClick={() => onAddToFavorites?.(product)}
+              style={{
+                padding: "12px 20px",
+                fontSize: "16px",
+                background: "#313640",
+                fontFamily: "var(--font-app, 'Orbitron', system-ui, sans-serif)",
+              }}
+              aria-label="Agregar a favoritos"
             >
               ❤
             </button>
           </div>
 
+          {/* Métodos de pago */}
           <div style={{ background: "#1e1f26", padding: "16px", borderRadius: "10px" }}>
             <h4 style={{ color: "white", marginBottom: "10px" }}>Métodos de Pago</h4>
             <p style={{ color: "#ccc", marginBottom: "12px" }}>
@@ -265,11 +399,12 @@ export default function ProductDetail({ onAddToCart, onAddToFavorites }) {
             <div style={{ display: "flex", gap: "14px", alignItems: "center", flexWrap: "wrap" }}>
               <img src="/img/mastercard.svg" alt="Mastercard" style={{ height: "30px" }} />
               <img src="/img/visa.svg" alt="Visa" style={{ height: "30px" }} />
-              <img src="/img/amex.svg" alt="Amex" style={{ height: "30px" }} />
+              <img src="/img/amex.svg" alt="American Express" style={{ height: "30px" }} />
               <img src="/img/paypal.svg" alt="PayPal" style={{ height: "30px" }} />
             </div>
           </div>
 
+          {/* Descripción */}
           <div style={{ marginTop: "60px" }}>
             <h3 style={{ color: "white", marginBottom: "15px", fontSize: "22px" }}>Descripción</h3>
             <p style={{ color: "#ccc", fontSize: "16px", lineHeight: 1.6 }}>
